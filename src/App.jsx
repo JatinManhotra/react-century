@@ -1,6 +1,8 @@
 import React from 'react'
 import Sidebar from './components/Sidebar'
-import Welcome from './components/Welcome'
+import WelcomePage from './pages/WelcomePage'
+import { Route, Routes } from 'react-router-dom'
+import ChatPage from './pages/ChatPage'
 
 const App = () => {
   return (
@@ -11,7 +13,10 @@ const App = () => {
 
     <main className='flex'>
       <Sidebar/>
-      <Welcome/>
+      <Routes>
+        <Route path='/' element={<WelcomePage/>}/>
+        <Route path='/chat/:id' element={<ChatPage/>}/>
+      </Routes>
     </main>
 
     <footer>

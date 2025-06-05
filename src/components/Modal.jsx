@@ -262,7 +262,7 @@ const Modal = () => {
                 type="text"
                 name="name"
                 id="name"
-                autoComplete="true"
+                autoComplete="on"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 onKeyUp={validateName}
@@ -301,7 +301,7 @@ const Modal = () => {
               type="email"
               name="email"
               id="email"
-              autoComplete="true"
+              autoComplete="on"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               onKeyUp={validateEmail}
@@ -340,7 +340,7 @@ const Modal = () => {
                 type={showPassword ? "text" : "password"} // toggle show password
                 name="password"
                 id="password"
-                autoComplete="true"
+                autoComplete="on"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 onKeyUp={signUpForm ? passwordStrength : validatePassword} // check for password strength in signup page and validation in login page

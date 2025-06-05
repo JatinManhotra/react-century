@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @font-face {
   font-family: outfit;
@@ -18,7 +19,7 @@
 }
 
 @layer utilities {
-   input:-webkit-autofill {
+  input:-webkit-autofill {
     -webkit-text-fill-color: white !important;
     transition: background-color 9999s ease-in-out 0s;
   }
@@ -50,6 +51,12 @@ body {
   background-color: rgb(77, 77, 77);
 }
 
+.prompt-shadow {
+  box-shadow: 3px -16px 54px 13px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 3px -16px 54px 13px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 3px -16px 54px 13px rgba(0, 0, 0, 0.3);
+}
+
 @keyframes animate-opacity {
   from {
     opacity: 0;
@@ -61,6 +68,21 @@ body {
 
 .animate-opacity {
   animation: animate-opacity 0.4s ease;
+}
+
+@keyframes animate-slow-opacity {
+  from {
+    opacity: 0;
+    
+  }
+  to {
+    opacity: 1;
+    
+  }
+}
+
+.animate-slow-opacity {
+  animation: animate-slow-opacity 4s ease;
 }
 
 @keyframes pop-down {
@@ -76,4 +98,19 @@ body {
 
 .pop-down {
   animation: pop-down 0.4s ease;
+}
+
+@keyframes animate-height {
+  from {
+    height: 10px;
+    opacity: 0;
+  }
+  to {
+    height: 100%;
+    opacity: 1;
+  }
+}
+
+.animate-height {
+  animation: animate-height 2s ease;
 }

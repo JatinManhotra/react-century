@@ -5,10 +5,28 @@ import { IoMenu, IoSearch } from "react-icons/io5";
 import { CenturyContext } from "../context/CenturyContext";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
-  const { isSignedIn, hideSidebar, setHideSidebar, setShowModal } =
-    useContext(CenturyContext);
+  const {
+    isSignedIn,
+    hideSidebar,
+    setHideSidebar,
+    setShowModal,
+    messages,
+    setMessages,
+    generatedId,
+    setGeneratedId,
+    getOrCreateId,
+  } = useContext(CenturyContext);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  function newChat() {
+    setMessages([]);
+    navigate("/");
+  }
 
   return (
     <section
@@ -39,24 +57,25 @@ const Sidebar = () => {
         {!hideSidebar ? (
           // btn for full width sidebar
           <button
-            disabled={true}
+            disabled={location.pathname !== "/" ? false : true}
             aria-label="New chat"
-            className="group relative flex w-full cursor-pointer items-center gap-4 pl-5 text-[#757a7c] disabled:cursor-default"
+            onClick={newChat}
+            className="group relative flex w-full cursor-pointer items-center gap-4 rounded-full px-3 py-2 pl-5 text-white hover:bg-[#3d3f41] active:bg-[#484a4d] disabled:cursor-default disabled:text-[#757a7c] disabled:hover:bg-[#282a2c] disabled:active:bg-[#282a2c]"
           >
             <HiOutlinePencilSquare className="text-xl" />
             <h3 className="overflow-hidden">New Chat</h3>
             <p className="side-tooltip">New Chat</p>
           </button>
         ) : (
-
           // small btn for collapsed sidebar
           <button
-            disabled={true}
+            disabled={location.pathname !== "/" ? false : true}
             aria-label="New chat"
-            className="group relative ml-2 cursor-pointer text-xl disabled:cursor-default"
+            onClick={newChat}
+            className="group relative w-fit cursor-pointer rounded-full p-2 text-xl text-white hover:bg-[#3d3f41] active:bg-[#484a4d] disabled:cursor-default disabled:text-[#757a7c] disabled:hover:bg-[#282a2c] disabled:active:bg-[#282a2c]"
           >
-            <HiOutlinePencilSquare className="text-[#757a7c]" />
-            <p className="side-tooltip -top-1">New Chat</p>
+            <HiOutlinePencilSquare className="" />
+            <p className="side-tooltip">New Chat</p>
           </button>
         )}
 
@@ -77,7 +96,7 @@ const Sidebar = () => {
       {!hideSidebar && (
         // hide in collapsed sidebar
         <div
-          className={`custom-scrollbar mt-8 overflow-x-hidden overflow-y-scroll ${isSignedIn ? "h-[calc(100%_-_14rem)]" : "h-[calc(100%_-_11rem)]"}`}
+          className={`custom-scrollbar mt-8 overflow-x-hidden overflow-y-scroll ${isSignedIn ? "h-[calc(100%_-_14.5rem)]" : "h-[calc(100%_-_11.5rem)]"}`}
         >
           <h3
             className={`${isSignedIn ? "text-[#7d8283]" : "text-white"} ml-5`}
@@ -86,7 +105,6 @@ const Sidebar = () => {
           </h3>
 
           {isSignedIn ? (
-
             // recent chats with century, top 5 chats will be shown and the rest will be shown after clicking on show more btn
 
             <div className="mt-2 flex flex-col">
@@ -118,7 +136,6 @@ const Sidebar = () => {
                 <BsThreeDotsVertical className="menu-btns text-3xl text-white" />
                 <p className="side-tooltip -right-35">Settings & help</p>
               </div>
-
 
               <button
                 aria-label="Show more"
@@ -188,7 +205,7 @@ const Sidebar = () => {
               <button
                 aria-label="Sign in"
                 onClick={() => setShowModal(true)} // open signup / login modal
-                className="mt-10 text-blue-400"
+                className="mt-10 cursor-pointer text-blue-400"
               >
                 Sign in
               </button>
@@ -209,9 +226,8 @@ const Sidebar = () => {
           <p className="side-tooltip -right-32">Settings & help</p>
         </button>
       ) : (
-
         // small btn for collapsed sidebar
-        <div className="absolute bottom-4">
+        <div className="absolute bottom-2">
           <button aria-label="Settings & help" className="group relative">
             <FaGear className="menu-btns text-4xl text-[#878e8f]" />
             <p className="side-tooltip -right-32">Settings & help</p>
