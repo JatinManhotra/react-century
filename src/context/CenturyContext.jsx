@@ -20,6 +20,13 @@ const CenturyContextProvider = ({ children }) => {
   const [errorMsg, setErrorMsg] = useState(false);
   const [messages, setMessages] = useState([]);
 
+  const [dark, setDark] = useState(true);
+
+  const [showMoreOptions, setShowMoreOptions] = useState(false);
+  const [toggleSidebarOptions, setToggleSidebarOptions] = useState(false)
+
+
+
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
@@ -133,6 +140,8 @@ const CenturyContextProvider = ({ children }) => {
         generatedId,
         setGeneratedId,
         getOrCreateId,
+        showMoreOptions, setShowMoreOptions,
+        dark, setDark, toggleSidebarOptions, setToggleSidebarOptions
       }}
     >
       {children}

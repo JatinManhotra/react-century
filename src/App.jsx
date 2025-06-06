@@ -1,8 +1,8 @@
 import React from 'react'
-import Sidebar from './components/Sidebar'
-import WelcomePage from './pages/WelcomePage'
+import Sidebar from './components/sidebar/Sidebar'
+import WelcomePage from './pages/welcome page/WelcomePage'
 import { Route, Routes } from 'react-router-dom'
-import ChatPage from './pages/ChatPage'
+import ChatPage from './pages/chat page/ChatPage'
 
 const App = () => {
   return (
