@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { FaCaretDown } from 'react-icons/fa'
+import { PiShootingStar } from 'react-icons/pi'
+import user from "../../assets/user.png"
+import { MdLogout } from 'react-icons/md'
+import { signOut } from 'firebase/auth'
+import { auth } from '../../config/firebase'
+import { useNavigate } from 'react-router-dom'
+import { CenturyContext } from '../../context/CenturyContext'
 
 const WelcomeHeader = ({ isSignedIn, setIsSignedIn }) => {
+
+  const navigate = useNavigate()
+
+ const {handleLogout} = useContext(CenturyContext)
 
   return (
      <div className="flex w-full items-center justify-between px-3 py-2">
@@ -38,7 +49,7 @@ const WelcomeHeader = ({ isSignedIn, setIsSignedIn }) => {
               <ul
                 className={`group-hover:opacity-100 group-hover:pointer-events-auto opacity-0 pointer-events-none -right-5 absolute cursor-pointer z-[10] bg-[#1b1c1d] whitespace-nowrap text-white shadow shadow-black w-32 transition-opacity duration-100 ease-in`}
               >
-                <li onClick={() => setIsSignedIn(false)} className="mt-2 text-red-400 text-base mb-2 flex items-center gap-3 px-6 py-2 hover:bg-[#272729]">
+                <li onClick={() => {handleLogout(), setIsSignedIn(false)}} className="mt-2 text-red-400 text-base mb-2 flex items-center gap-3 px-6 py-2 hover:bg-[#272729]">
                   <MdLogout className="text-lg" /> Logout
                 </li>
               </ul>
@@ -50,7 +61,7 @@ const WelcomeHeader = ({ isSignedIn, setIsSignedIn }) => {
             <a target="_blank" href="https://github.com/JatinManhotra/react-century" className="cursor-pointer text-blue-200">About Century</a>
             <button
               aria-label="Sign in"
-              onClick={() => setIsSignedIn(true)}
+              
               className="cursor-pointer rounded-sm bg-blue-300 px-4 py-1.5"
             >
               Sign in

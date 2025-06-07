@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CenturyContext } from "../../context/CenturyContext";
 
@@ -6,6 +6,9 @@ import SidebarHeader from "./SidebarHeader";
 import SidebarChatAndExploreBtn from "./SidebarChatAndExploreBtn";
 import SidebarRecent from "./SidebarRecent";
 import SidebarSettingsAndHelp from "./SidebarSettingsAndHelp";
+import { useAuth } from "../../context/AuthContext";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "../../config/firebase";
 
 const Sidebar = () => {
   const {
@@ -24,6 +27,10 @@ const Sidebar = () => {
     setToggleSidebarOptions,
   } = useContext(CenturyContext);
 
+  const { user, userData, loading } = useAuth();
+
+ 
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -32,14 +39,28 @@ const Sidebar = () => {
     navigate("/");
   }
 
+   
+
+
+
+
+
+
+  if (loading) {
+    return;
+  }
+
   return (
     <section
-      className={`relative z-[100] h-screen w-full bg-[#f0f4f9] dark:bg-[#282a2c] p-4 whitespace-nowrap transition-all duration-300 ease-in-out ${
+      className={`relative z-[95] h-screen w-full bg-[#f0f4f9] p-4 whitespace-nowrap transition-all duration-300 ease-in-out dark:bg-[#282a2c] ${
         hideSidebar ? "max-w-[4rem]" : "max-w-[18rem]"
       }`}
     >
       {/* first two menu btns with tooltips*/}
-      <SidebarHeader hideSidebar={hideSidebar} setHideSidebar={setHideSidebar} />
+      <SidebarHeader
+        hideSidebar={hideSidebar}
+        setHideSidebar={setHideSidebar}
+      />
 
       {/* new chat and explore btn */}
       <SidebarChatAndExploreBtn
@@ -51,6 +72,7 @@ const Sidebar = () => {
 
       {/* recent chats */}
       <SidebarRecent
+     
         messages={messages}
         generatedId={generatedId}
         setGeneratedId={setGeneratedId}

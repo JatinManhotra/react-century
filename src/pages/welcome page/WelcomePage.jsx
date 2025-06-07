@@ -5,6 +5,7 @@ import WelcomeHeader from "./WelcomeHeader.jsx";
 import WelcomeGreeting from "./WelcomeGreeting.jsx";
 import WelcomeChat from "./WelcomeChat.jsx";
 import WelcomeTermsAndPolicy from "./WelcomeTermsAndPolicy.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 const Welcome = () => {
   const {
@@ -20,6 +21,16 @@ const Welcome = () => {
     setGeneratedId,
     getOrCreateId,
   } = useContext(CenturyContext);
+
+    const {  loading } = useAuth();
+
+  if (loading) {
+    return <div className="bg-white text-5xl">
+      <h1>Loading</h1>
+    </div>
+  }
+
+ 
 
   return (
     <section className="h-screen w-screen bg-[#1b1c1d]">

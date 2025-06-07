@@ -20,6 +20,9 @@ const WelcomeChat = ({
         <div className="m-auto flex w-[45rem] flex-col rounded-3xl border border-[#9a9fa5]/50 px-4 py-3 text-[#9a9fa5]">
           <input
             placeholder="Ask Century"
+            value={promptInput}
+            onChange={(e)=>setPromptInput(e.target.value)}
+            onKeyDown={(e) => fetchPrompt(e, promptInput, getOrCreateId())}
             className="flex-1 border-none px-3 text-base text-white outline-none placeholder:text-[#9a9fa5]"
             type="text"
             name="chat-field"
@@ -52,10 +55,24 @@ const WelcomeChat = ({
                 <p className="bottom-tooltip">Create docs and apps</p>
               </div>
             </div>
+
+            {promptInput.trim().length >= 1 ? (
             <div className="group relative">
-              <FaMicrophone className="menu-btns text-4xl text-[#9a9fa5]" />
+              <span
+               onClick={() => handleSubmit(promptInput, getOrCreateId())}
+                className="menu-btns flex h-9 w-9 items-center justify-center rounded-full p-2 text-white"
+              >
+                <IoSend className="text-4xl" />
+              </span>
+              <p className="bottom-tooltip">Submit</p>
+            </div>
+          ) : (
+            <div className="group relative">
+              <FaMicrophone className="menu-btns text-4xl text-[#868a8f]" />
               <p className="bottom-tooltip">Use microphone</p>
             </div>
+          )}
+
           </div>
         </div>
       ) : (

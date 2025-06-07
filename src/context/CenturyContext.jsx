@@ -1,11 +1,20 @@
 import React, { createContext, useEffect, useState } from "react";
 import { generateGeminiResponse } from "../services/geminiService";
 import {
+  doc,
+  Timestamp,
+  getDoc,
+  setDoc,
+} from "firebase/firestore";
+import { auth, db } from "../config/firebase";
+import {
   Navigate,
   useLocation,
   useNavigate,
   useParams,
 } from "react-router-dom";
+import { useAuth } from "./AuthContext";
+import { signOut } from "firebase/auth";
 
 export const CenturyContext = createContext();
 
@@ -23,19 +32,31 @@ const CenturyContextProvider = ({ children }) => {
   const [dark, setDark] = useState(true);
 
   const [showMoreOptions, setShowMoreOptions] = useState(false);
-  const [toggleSidebarOptions, setToggleSidebarOptions] = useState(false)
+  const [toggleSidebarOptions, setToggleSidebarOptions] = useState(false);
 
-
+  const [username, setUsername] = useState("");
 
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
+
+  const [recentChat, setRecentChat] = useState();
 
   const getOrCreateId = () => {
     const id = crypto.randomUUID();
     setGeneratedId(id);
     return id;
   };
+
+   const handleLogout = async () => {
+      try {
+        await signOut(auth);
+        navigate(`/`)
+        console.log("User logged out")
+      } catch (error) {
+        console.log("Logout error",error)
+      }
+    }
 
   // console.log(getOrCreateId());
 
@@ -53,21 +74,19 @@ const CenturyContextProvider = ({ children }) => {
         navigate(expectedPath);
       }
 
-      // Add user prompt
-      setMessages((prev) => [
-        ...prev,
-        { id: generatedId, role: "user", text: prompt },
-      ]);
-
       setLoading(true);
 
       const data = await generateGeminiResponse(prompt);
 
-      // Add AI response
-      setMessages((prev) => [
-        ...prev,
-        { id: generatedId, role: "ai", text: data },
-      ]);
+      const userMsg = { id: generatedId, role: "user", text: prompt };
+      const aiMsg = { id: generatedId, role: "ai", text: data };
+      const conversation = [userMsg, aiMsg];
+
+      setMessages((prev) => {
+        const updated = [...prev, ...conversation];
+        saveConversation(conversation, prompt, generatedId); // Pass the ID too
+        return updated;
+      });
 
       setLoading(false);
     } catch (error) {
@@ -78,6 +97,75 @@ const CenturyContextProvider = ({ children }) => {
     }
   }
 
+  const saveConversation = async (messages, firstPrompt, chatId) => {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const userRef = doc(db, "users", user.uid);
+
+    try {
+      const userSnap = await getDoc(userRef);
+      let updatedConversations = [];
+      const newMessageObjs = messages.map((msg) => ({
+        id: msg.id,
+        role: msg.role,
+        text: msg.text,
+      }));
+
+      if (userSnap.exists()) {
+        const data = userSnap.data();
+        const existing = data.conversations || [];
+
+        const convoIndex = existing.findIndex((c) => c.id === chatId);
+
+        if (convoIndex !== -1) {
+          // Append to existing conversation
+          const convo = existing[convoIndex];
+          convo.messages = [...convo.messages, ...newMessageObjs];
+          updatedConversations = [
+            ...existing.slice(0, convoIndex),
+            convo,
+            ...existing.slice(convoIndex + 1),
+          ];
+        } else {
+          // Create new conversation
+          updatedConversations = [
+            ...existing,
+            {
+              id: chatId,
+              createdAt: Timestamp.now(),
+              title: firstPrompt.split(" ").slice(0, 6).join(" "),
+              messages: newMessageObjs,
+            },
+          ];
+        }
+      } else {
+        // First time user
+        updatedConversations = [
+          {
+            id: chatId,
+            createdAt: Timestamp.now(),
+            title: firstPrompt.split(" ").slice(0, 6).join(" "),
+            messages: newMessageObjs,
+          },
+        ];
+      }
+
+      await setDoc(
+        userRef,
+        {
+          conversations: updatedConversations,
+        },
+        { merge: true }, // to avoid overwriting name/email
+      );
+
+       setRecentChat(updatedConversations);
+
+      console.log("Conversation saved ✅");
+    } catch (error) {
+      console.error("Error saving conversation ❌", error);
+    }
+  };
 
 
   // use enter key to send prompts
@@ -140,8 +228,15 @@ const CenturyContextProvider = ({ children }) => {
         generatedId,
         setGeneratedId,
         getOrCreateId,
-        showMoreOptions, setShowMoreOptions,
-        dark, setDark, toggleSidebarOptions, setToggleSidebarOptions
+        showMoreOptions,
+        setShowMoreOptions,
+        dark,
+        setDark,
+        toggleSidebarOptions,
+        setToggleSidebarOptions,
+        username,
+        setUsername,
+        recentChat, setRecentChat,handleLogout
       }}
     >
       {children}

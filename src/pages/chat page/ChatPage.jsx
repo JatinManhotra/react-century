@@ -15,6 +15,10 @@ import ChatField from "./ChatField";
 import ChatTermsAndPolicy from "./ChatTermsAndPolicy";
 import ChatFeedback from "./ChatFeedback";
 import Modal from "../../components/modal/modal";
+import { auth, db } from "../../config/firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { useAuth } from "../../context/AuthContext";
+
 
 const ChatPage = () => {
   const {
@@ -32,7 +36,7 @@ const ChatPage = () => {
     setLoading,
     showMoreOptions,
     setShowMoreOptions,
-    hideSidebar,
+    hideSidebar,recentChat
   } = useContext(CenturyContext);
 
   const [editingIndex, setEditingIndex] = useState(null);
@@ -45,6 +49,42 @@ const ChatPage = () => {
   const { id } = useParams();
   const bottomRef = useRef();
   const moreBtnRef = useRef();
+
+  const {setUserData} = useAuth();
+
+ 
+useEffect(() => {
+  if (!id || !recentChat?.length) return;
+
+  const chat = recentChat.find((c) => c.id === id);
+  if (chat) {
+    setMessages(chat.messages);
+  }
+}, [id, recentChat]);
+
+    useEffect(() => {
+    const fetchMessages = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const userRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(userRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        const conversation = data.conversations.find(c => c.id === id);
+
+        if (conversation) {
+          setMessages(conversation.messages);
+          setUserData(data);
+        }
+      }
+
+      setLoading(false);
+    };
+
+    fetchMessages();
+  }, [id]);
 
   function handleEditText(index, text) {
     setEditingIndex(index);
@@ -103,23 +143,34 @@ const ChatPage = () => {
     }
   };
 
-  const handleCopy = (text) => {
-    navigator.clipboard
-      .writeText(text)
-      .then(() => {
-        setShowMoreOptions(false);
-        setFeedback({
+ const handleCopy = (text, index) => {
+  navigator.clipboard
+    .writeText(text)
+    .then(() => {
+      setShowMoreOptions(false);
+      setFeedbacks((prev) => ({
+        ...prev,
+        [index]: {
+          ...prev[index],
           msg: "Copied to clipboard",
-          visible: true,
-        });
-        setTimeout(() => {
-          setFeedback((prev) => ({ ...prev, visible: false }));
-        }, 3000);
-      })
-      .catch((err) => {
-        console.error("Failed to copy: ", err);
-      });
-  };
+          feedbackVisible: true,
+        },
+      }));
+      setActiveFeedbackIndex(index);
+
+      setTimeout(() => {
+        setFeedbacks((prev) => ({
+          ...prev,
+          [index]: { ...prev[index], feedbackVisible: false },
+        }));
+        setActiveFeedbackIndex(null);
+      }, 3000);
+    })
+    .catch((err) => {
+      console.error("Failed to copy: ", err);
+    });
+};
+
 
   function handleTextChange(e) {
     setEditingText(e.target.value);
@@ -179,7 +230,7 @@ const ChatPage = () => {
           text: "AI chat app by Jatin 👇",
           url,
         });
-        console.log("Shared successfully");
+        
       } catch (err) {
         console.error("Share failed:", err);
       }
@@ -194,9 +245,9 @@ const ChatPage = () => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log(messages);
-  // }, [messages]);
+  useEffect(() => {
+    console.log(messages);
+  }, [messages]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });

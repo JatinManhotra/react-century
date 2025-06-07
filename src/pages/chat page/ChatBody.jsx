@@ -85,8 +85,8 @@ const ChatBody = ({
                       </div>
                     </div>
                   ) : (
-                    <div className="group flex flex-row-reverse items-start gap-2">
-                      <p className="self-center rounded-l-2xl rounded-br-2xl bg-[#333537] p-3">
+                    <div className="group flex  flex-row-reverse items-start  gap-2">
+                      <p className="self-center max-w-[30vw] rounded-l-2xl rounded-br-2xl bg-[#333537] p-3">
                         {msg.text}
                       </p>
                       <div
@@ -100,7 +100,7 @@ const ChatBody = ({
                   )
                 ) : (
                   <div className="prose prose-invert animate-height max-w-none self-center overflow-hidden">
-                    <ReactMarkdown>{msg.text}</ReactMarkdown>
+                    <ReactMarkdown >{msg.text}</ReactMarkdown>
                   </div>
                 )}
                 {msg.role === "ai" && (

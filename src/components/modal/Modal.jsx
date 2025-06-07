@@ -3,9 +3,12 @@ import { CenturyContext } from "../../context/CenturyContext";
 import ModalBodyForm from "./ModalBodyForm";
 import ModalHeader from "./ModalHeader";
 import ModalFooter from "./ModalFooter";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../../config/firebase";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const Modal = () => {
-  const { setShowModal } = useContext(CenturyContext);
+  const { setShowModal,username, setUsername } = useContext(CenturyContext);
 
   // declaring states
   const [showPassword, setShowPassword] = useState(false);
@@ -90,9 +93,9 @@ const Modal = () => {
       });
       return false;
     }
-    if (password.length < 4) {
+    if (password.length < 6) {
       setPasswordError({
-        msg: "Password can only be 4 or more characters long",
+        msg: "Password can only be 6 or more characters long",
         error: true,
         touched: true,
       });
@@ -117,7 +120,7 @@ const Modal = () => {
         touched: true,
       });
       return false;
-    } else if (password.trim().length < 4) {
+    } else if (password.trim().length < 6) {
       setPasswordStrengthMsg({
         msg: "Password strength is weak",
         border: "border-red-500",
@@ -125,7 +128,7 @@ const Modal = () => {
         touched: true,
       });
       return false; // weak password should not be acceptable
-    } else if (password.trim().length >= 4 && password.trim().length < 8) {
+    } else if (password.trim().length >= 6 && password.trim().length < 8) {
       setPasswordStrengthMsg({
         msg: "Password strength is medium",
         border: "border-orange-500",
@@ -144,7 +147,7 @@ const Modal = () => {
     }
   }
 
-  function validateForm(event) {
+  async function validateForm(event) {
     event.preventDefault();
 
     if (signUpForm) {
@@ -166,7 +169,7 @@ const Modal = () => {
             error: false,
           }));
         }, 3000);
-        return false;
+        return;
       }
 
       if (
@@ -187,8 +190,20 @@ const Modal = () => {
             error: false,
           }));
         }, 3000);
-        return false;
+        return;
       }
+      try {
+      await handleSignUp(name, email, password);
+      setIsSignedIn(true);
+      
+       // if you use this
+    } catch (error) {
+      setAllErrorsMsg({
+        opacity: "opacity-100",
+        msg: "Signup failed. Try again.",
+        error: true,
+      });
+    }
     } else {
       // for login page
       if (email.trim().length === 0 || password.trim().length === 0) {
@@ -204,7 +219,7 @@ const Modal = () => {
             error: false,
           }));
         }, 3000);
-        return false;
+        return;
       }
 
       if (!validateEmail() || !validatePassword()) {
@@ -220,8 +235,65 @@ const Modal = () => {
             error: false,
           }));
         }, 3000);
-        return false;
+        return;
       }
+
+       try {
+      await handleLogIn(email, password);
+      setIsSignedIn(true); 
+      
+      // if you use this
+    } catch (error) {
+      setAllErrorsMsg({
+        opacity: "opacity-100",
+        msg: "Login failed. Try again.",
+        error: true,
+      });
+    }
+
+   
+
+
+    }
+  }
+
+  // New user signup logic
+  const handleSignUp =  async (name, email, password) => {
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredentials.user;
+
+      await setDoc(doc(db, "users", user.uid), {
+        name,
+        email
+      })
+
+      setUsername(name)
+      setShowModal(false);
+      console.log("Signup successful")
+    } catch (error) {
+      console.log("Signup failed",error)
+    }
+  }
+
+  // Existing user login logic
+  const handleLogIn = async (email, password) => {
+    try {
+      const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredentials.user;
+
+      const docRef = doc(db,"users",user.uid);
+      const docSnap = await getDoc(docRef);
+
+      if(docSnap.exists()){
+        const userData = docSnap.data();
+        setUsername(userData.name)
+        setShowModal(false)
+      }else{
+        console.log("No such user exists")
+      }
+    } catch (error) {
+      console.log("Login failed",error)
     }
   }
 
@@ -230,7 +302,7 @@ const Modal = () => {
       {/* faint black background for modal */}
       <div
         onClick={() => setShowModal(false)}
-        className="animate-opacity fixed h-screen w-screen bg-black/50"
+        className="animate-opacity z-[98] fixed h-screen w-screen bg-black/50"
       ></div>
 
       {/* modal component */}

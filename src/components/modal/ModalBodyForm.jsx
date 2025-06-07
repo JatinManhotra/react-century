@@ -1,5 +1,7 @@
+
 import React from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+
 
 const ModalBodyForm = ({
   signUpForm,
@@ -22,14 +24,18 @@ const ModalBodyForm = ({
   allErrorsMsg,
   validateForm,
 }) => {
+
+  
+
   return (
-    <form onSubmit={(event) => validateForm(event)} className="px-8 space-y-4">
+    <form onSubmit={(event) => validateForm(event)} className="px-8">
       {signUpForm && (
         <div>
           <label htmlFor="name" className="mb-1 block text-sm font-medium text-white">
             Name
           </label>
           <input
+          autoComplete="on"
             type="text"
             id="name"
             value={name}
@@ -63,6 +69,8 @@ const ModalBodyForm = ({
           Email
         </label>
         <input
+          autoComplete="on"
+
           type="email"
           id="email"
           value={email}
@@ -96,6 +104,8 @@ const ModalBodyForm = ({
         </label>
         <div className="relative flex items-center">
           <input
+          autoComplete="on"
+
             type={showPassword ? "text" : "password"}
             id="password"
             value={password}
@@ -149,6 +159,8 @@ const ModalBodyForm = ({
         <div className="mt-2 flex items-center justify-between">
           <label htmlFor="checkbox" className="flex cursor-pointer items-center">
             <input
+          autoComplete="on"
+
               type="checkbox"
               id="checkbox"
               className="rounded border-gray-500 text-indigo-600 accent-indigo-600 focus:ring-indigo-500"
@@ -163,7 +175,7 @@ const ModalBodyForm = ({
 
       <button
         type="submit"
-        className="mt-4 w-full rounded-lg bg-indigo-600 py-2.5 font-medium text-white transition-colors hover:bg-indigo-700"
+        className="mt-4 w-full rounded-lg bg-indigo-600 py-2.5 font-medium text-white transition-colors cursor-pointer hover:bg-indigo-700"
       >
         {signUpForm ? "Sign Up" : "Log In"}
       </button>
