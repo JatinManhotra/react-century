@@ -10,10 +10,10 @@
 
 @layer components {
   .menu-btns {
-    @apply cursor-pointer rounded-full p-2 text-white hover:bg-[#353739] active:bg-[#494c4e];
+    @apply cursor-pointer rounded-full p-2 text-[#444444] hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:text-white dark:hover:bg-[#353739] dark:active:bg-[#494c4e];
   }
   .bottom-tooltip {
-    @apply absolute -bottom-8 -left-2 rounded-lg bg-black px-2 py-1 text-sm whitespace-nowrap text-white opacity-0 transition-opacity duration-150 ease-in group-hover:opacity-100;
+    @apply absolute -bottom-8 -left-2 rounded-lg  bg-black px-2 py-1 text-sm whitespace-nowrap  text-white opacity-0 transition-opacity duration-150 ease-in group-hover:opacity-100;
   }
   .side-tooltip {
     @apply absolute top-1 -right-25 rounded-lg bg-black px-2 py-1 text-sm whitespace-nowrap text-white opacity-0 transition-opacity duration-150 ease-in group-hover:opacity-100;
@@ -22,6 +22,12 @@
 
 @layer utilities {
   input:-webkit-autofill {
+    -webkit-text-fill-color: black !important;
+    transition: background-color 9999s ease-in-out 0s;
+  }
+}
+@layer utilities {
+  .dark input:-webkit-autofill {
     -webkit-text-fill-color: white !important;
     transition: background-color 9999s ease-in-out 0s;
   }
@@ -35,7 +41,6 @@
 body {
   width: 100vw;
   height: 100vh;
-  background-color: #282a2c;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -51,6 +56,21 @@ body {
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: rgb(77, 77, 77);
+}
+
+.light-scrollbar::-webkit-scrollbar {
+  appearance: none;
+  width: 0.625rem;
+}
+
+.light-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #b5bac0;
+  cursor: pointer;
+  border-radius: 0.5rem;
+}
+
+.light-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #a3a8ad;
 }
 
 .prompt-shadow {
@@ -75,11 +95,9 @@ body {
 @keyframes animate-slow-opacity {
   from {
     opacity: 0;
-    
   }
   to {
     opacity: 1;
-    
   }
 }
 
@@ -115,4 +133,35 @@ body {
 
 .animate-height {
   animation: animate-height 2s ease;
+}
+
+.div-spinner {
+  
+  border: .25rem solid transparent;
+  border-top-color: #3cefff;
+  border-bottom-color: #3cefff;
+  animation: spin 3s linear infinite alternate;
+}
+
+
+@keyframes spin {
+  from{
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.scale-img{
+  animation: scale 4s linear infinite alternate;
+}
+
+@keyframes scale {
+  from {
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1.2);
+  }
 }

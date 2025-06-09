@@ -15,57 +15,56 @@ import { CenturyContext } from "../../context/CenturyContext";
 import { auth, db } from "../../config/firebase";
 import { doc, setDoc } from "firebase/firestore";
 
-
 const SidebarMoreOptions = ({
   toggleSidebarOptions,
   setToggleSidebarOptions,
-  collapsed
+  collapsed,
 }) => {
   const { dark, setDark } = useContext(CenturyContext);
 
- async function setLightMode() {
-  document.documentElement.classList.remove("dark");
-  localStorage.setItem("darkMode", "false"); // or "false"
+  async function setLightMode() {
+    document.documentElement.classList.remove("dark");
+    localStorage.setItem("darkMode", "false"); // or "false"
 
-  setDark(false);
+    setDark(false);
 
-  const user = auth.currentUser;
-  if (user) {
-    const userRef = doc(db, "users", user.uid);
-    await setDoc(userRef, { dark: false }, { merge: true });
+    const user = auth.currentUser;
+    if (user) {
+      const userRef = doc(db, "users", user.uid);
+      await setDoc(userRef, { dark: false }, { merge: true });
+    }
   }
-}
 
-async function setDarkMode() {
-  document.documentElement.classList.add("dark");
-  localStorage.setItem("darkMode", "true"); // or "false"
+  async function setDarkMode() {
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("darkMode", "true"); // or "false"
 
-  setDark(true);
+    setDark(true);
 
-  const user = auth.currentUser;
-  if (user) {
-    const userRef = doc(db, "users", user.uid);
-    await setDoc(userRef, { dark: true }, { merge: true });
+    const user = auth.currentUser;
+    if (user) {
+      const userRef = doc(db, "users", user.uid);
+      await setDoc(userRef, { dark: true }, { merge: true });
+    }
   }
-}
 
   return (
     <ul
-      className={`${toggleSidebarOptions ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"} ${collapsed ? "-right-40" : "right-0"} absolute -top-80  z-10 cursor-pointer bg-[#1b1c1d] whitespace-nowrap text-white shadow shadow-black transition-opacity duration-100 ease-in`}
+      className={`${toggleSidebarOptions ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"} ${collapsed ? "-right-40" : "right-0"} absolute -top-80 bg-[#f0f4f9] cursor-pointer dark:bg-[#1b1c1d] whitespace-nowrap rounded-lg dark:text-white shadow shadow-black/50 transition-opacity duration-100 ease-in`}
     >
-      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#313234]">
+      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234] ">
         <FaHistory className="text-lg" /> Activity
       </li>
-      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#313234]">
+      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234] ">
         <HiOutlineUserPlus className="text-xl" /> Saved info
       </li>
-      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#313234]">
+      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234] ">
         <IoExtensionPuzzleOutline className="text-xl" /> Apps
       </li>
-      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#313234]">
+      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234] ">
         <IoMdLink className="text-xl" /> Your public links
       </li>
-      <li className="group relative mt-2 mb-2 px-6 py-1 text-sm hover:bg-[#313234]">
+      <li className="group relative mt-2 mb-2 px-6 py-1 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234] ">
         <div className="flex items-center gap-5">
           <TbSunMoon className="text-3xl" />{" "}
           <p className="flex w-full items-center justify-between">
@@ -74,30 +73,30 @@ async function setDarkMode() {
         </div>
 
         <div className="pointer-events-none absolute -top-0 -right-45 opacity-0 transition-opacity duration-100 ease-in group-hover:pointer-events-auto group-hover:opacity-100">
-          <ul className="w-50 bg-[#1b1c1d] py-2 whitespace-nowrap text-white shadow shadow-black transition-opacity duration-100 ease-in">
-            <li className="mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#313234]">
+          <ul className="w-50 dark:bg-[#1b1c1d] bg-[#f0f4f9] py-2 whitespace-nowrap dark:text-white shadow shadow-black/50 transition-opacity duration-100 ease-in">
+            <li className="mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234] ">
               System
             </li>
             <li
               onClick={setLightMode}
-              className="mb-2 flex w-full items-center justify-between gap-5 px-6 py-2 text-sm hover:bg-[#313234]"
+              className="mb-2 flex w-full items-center justify-between gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234] "
             >
               Light {dark ? null : <LuCircleCheckBig className="text-lg" />}
             </li>
             <li
               onClick={setDarkMode}
-              className="flex w-full items-center justify-between gap-5 px-6 py-2 text-sm hover:bg-[#313234]"
+              className="flex w-full items-center justify-between gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234] "
             >
               Dark {dark ? <LuCircleCheckBig className="text-lg" /> : null}
             </li>
           </ul>
         </div>
       </li>
-      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#313234]">
+      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234] ">
         <MdOutlineFeedback className="text-xl" /> Send feedback
       </li>
 
-      <li className="group relative mt-2 mb-2 px-6 py-1 text-sm hover:bg-[#313234]">
+      <li className="group relative mt-2 mb-2 px-6 py-1 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234] ">
         <div className="flex items-center gap-5">
           <MdOutlineHelpCenter className="text-3xl" />{" "}
           <p className="flex w-full items-center justify-between">
@@ -106,11 +105,11 @@ async function setDarkMode() {
         </div>
 
         <div className="pointer-events-none absolute -top-5 -right-45 opacity-0 transition-opacity duration-100 ease-in group-hover:pointer-events-auto group-hover:opacity-100">
-          <ul className="w-50 bg-[#1b1c1d] py-2 whitespace-nowrap text-white shadow shadow-black transition-opacity duration-100 ease-in">
-            <li className="mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#313234]">
+          <ul className="w-50 bg-[#f0f4f9] dark:bg-[#1b1c1d] py-2 whitespace-nowrap dark:text-white shadow shadow-black/50 transition-opacity duration-100 ease-in">
+            <li className="mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234] ">
               <IoIosHelpCircleOutline className="text-xl" /> Help center
             </li>
-            <li className="flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#313234]">
+            <li className="flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234] ">
               <MdOutlinePrivacyTip className="text-xl" />
               Privacy
             </li>

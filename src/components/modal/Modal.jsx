@@ -5,7 +5,7 @@ import ModalHeader from "./ModalHeader";
 import ModalFooter from "./ModalFooter";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../config/firebase";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
 
 const Modal = () => {
   const { setShowModal,username, setUsername } = useContext(CenturyContext);
@@ -116,7 +116,7 @@ const Modal = () => {
       setPasswordStrengthMsg({
         msg: "Password cannot be empty",
         border: "border-red-500",
-        color: "text-red-400",
+        color: "text-red-600 dark:text-red-400",
         touched: true,
       });
       return false;
@@ -124,7 +124,7 @@ const Modal = () => {
       setPasswordStrengthMsg({
         msg: "Password strength is weak",
         border: "border-red-500",
-        color: "text-red-400",
+        color: "text-red-600 dark:text-red-400",
         touched: true,
       });
       return false; // weak password should not be acceptable
@@ -132,7 +132,7 @@ const Modal = () => {
       setPasswordStrengthMsg({
         msg: "Password strength is medium",
         border: "border-orange-500",
-        color: "text-orange-400",
+        color: "text-orange-600 dark:text-orange-400",
         touched: true,
       });
       return true;
@@ -140,7 +140,7 @@ const Modal = () => {
       setPasswordStrengthMsg({
         msg: "Password strength is strong",
         border: "border-green-500",
-        color: "text-green-400",
+        color: "text-green-600 dark:text-green-400",
         touched: true,
       });
       return true;
@@ -264,8 +264,11 @@ const Modal = () => {
       const user = userCredentials.user;
 
       await setDoc(doc(db, "users", user.uid), {
-        name,
-        email
+        name : name,
+        email : email,
+         dark: true,
+      conversations: [],
+      createdAt: Timestamp.now(),
       })
 
       const firstName = name.split(" ")
@@ -308,7 +311,7 @@ const Modal = () => {
       ></div>
 
       {/* modal component */}
-      <div className="pop-down z-[100] w-full max-w-md rounded-xl bg-[#282a2c] text-white shadow-lg">
+      <div className="pop-down z-[100] w-full max-w-md rounded-xl text-black bg-[#f0f4f9] dark:bg-[#282a2c] dark:text-white shadow-lg">
         {/* logo and text with close icon */}
         <ModalHeader signUpForm={signUpForm} />
         {/* ModalBody form */}

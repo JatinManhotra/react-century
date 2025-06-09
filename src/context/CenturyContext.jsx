@@ -29,6 +29,8 @@ const CenturyContextProvider = ({ children }) => {
   const [errorMsg, setErrorMsg] = useState(false);
   const [messages, setMessages] = useState([]);
 
+  const [globalFeedback, setGlobalFeedback] = useState({msg:"", error:false})
+
   const [dark, setDark] = useState(true);
 
   const [showMoreOptions, setShowMoreOptions] = useState(false);
@@ -47,6 +49,14 @@ const CenturyContextProvider = ({ children }) => {
     setGeneratedId(id);
     return id;
   };
+
+  useEffect(()=>{
+    if(dark){
+      document.body.style.backgroundColor = "#282a2c";
+    }else{
+      document.body.style.backgroundColor = "#fff";
+    }
+  },[dark])
 
    const handleLogout = async () => {
       try {
@@ -73,20 +83,21 @@ const CenturyContextProvider = ({ children }) => {
       if (currentPath !== expectedPath) {
         navigate(expectedPath);
       }
+      const userMsg = { id: generatedId, role: "user", text: prompt };
+       setMessages((prev) => [...prev, userMsg]);
 
       setLoading(true);
 
-      const data = await generateGeminiResponse(prompt);
+       // Show user message and loading immediately
+    const data = await generateGeminiResponse(prompt); // AI response
 
-      const userMsg = { id: generatedId, role: "user", text: prompt };
-      const aiMsg = { id: generatedId, role: "ai", text: data };
-      const conversation = [userMsg, aiMsg];
+    const aiMsg = { id: generatedId, role: "ai", text: data };
+      
 
-      setMessages((prev) => {
-        const updated = [...prev, ...conversation];
-        saveConversation(conversation, prompt, generatedId); // Pass the ID too
-        return updated;
-      });
+      setMessages((prev) => [...prev, aiMsg]);
+
+    const conversation = [userMsg, aiMsg];
+    saveConversation(conversation, prompt, generatedId);
 
       setLoading(false);
     } catch (error) {
@@ -237,7 +248,7 @@ const CenturyContextProvider = ({ children }) => {
         setToggleSidebarOptions,
         username,
         setUsername,
-        recentChat, setRecentChat,handleLogout
+        recentChat, setRecentChat,handleLogout,globalFeedback, setGlobalFeedback
       }}
     >
       {children}

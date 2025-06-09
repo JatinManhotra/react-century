@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { BsThreeDotsVertical, BsTrash } from "react-icons/bs";
-import { RiArrowDropDownLine } from "react-icons/ri";
+import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { CenturyContext } from "../../context/CenturyContext";
 import { useMatch, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -9,9 +9,8 @@ import SidebarRenameModal from "./SidebarRenameModal";
 import { auth, db } from "../../config/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
-
 const TimestampConverter = ({ timestamp }) => {
-  if(!timestamp) return;
+  if (!timestamp) return;
   const seconds = timestamp.seconds;
   const nanoseconds = timestamp.nanoseconds;
 
@@ -19,7 +18,7 @@ const TimestampConverter = ({ timestamp }) => {
 
   const formatDate = (date) => {
     const day = date.getDate();
-    const month = date.toLocaleString('default', { month: 'long' }); // Get full month name
+    const month = date.toLocaleString("default", { month: "long" }); // Get full month name
     const year = date.getFullYear();
 
     return `${day} ${month} ${year}`;
@@ -28,10 +27,10 @@ const TimestampConverter = ({ timestamp }) => {
   const formatTime = (date) => {
     let hours = date.getHours();
     const minutes = date.getMinutes();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const ampm = hours >= 12 ? "PM" : "AM";
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    const minutesStr = minutes < 10 ? '0' + minutes : minutes; // Add leading zero for minutes < 10
+    const minutesStr = minutes < 10 ? "0" + minutes : minutes; // Add leading zero for minutes < 10
 
     return `${hours}:${minutesStr} ${ampm}`;
   };
@@ -40,8 +39,8 @@ const TimestampConverter = ({ timestamp }) => {
   const formattedTime = formatTime(date);
 
   return (
-    <span className="text-sm text-gray-400">
-      {formattedDate} <br/> {formattedTime}
+    <span className="text-sm text-gray-600 dark:text-gray-400">
+      {formattedDate} <br /> {formattedTime}
     </span>
   );
 };
@@ -52,7 +51,7 @@ const SidebarRecent = ({
   setGeneratedId,
   getOrCreateId,
 }) => {
-  const { hideSidebar, isSignedIn, setShowModal, recentChat, setRecentChat } =
+  const { hideSidebar, isSignedIn, setShowModal, recentChat, setRecentChat, dark } =
     useContext(CenturyContext);
 
   const navigate = useNavigate();
@@ -61,7 +60,7 @@ const SidebarRecent = ({
   const currentChatId = match?.params?.id;
 
   const [showAll, setShowAll] = useState(false);
-  const [showDelete, setShowDelete] = useState(false)
+  const [showDelete, setShowDelete] = useState(false);
 
   const sortedChats = [...(recentChat || [])].reverse();
   const topChats = sortedChats.slice(0, 5);
@@ -73,7 +72,7 @@ const SidebarRecent = ({
   const [selectedChatId, setSelectedChatId] = useState(null);
   const [selectedChatTitle, setSelectedChatTitle] = useState("");
 
-  const [timestamp, setTimestamp] = useState(null)
+  const [timestamp, setTimestamp] = useState(null);
 
   const handleRenameClick = (id, title) => {
     setSelectedChatId(id);
@@ -104,7 +103,7 @@ const SidebarRecent = ({
         setRecentChat(updatedConversations);
         setShowDelete(true);
         setTimeout(() => {
-          setShowDelete(false)
+          setShowDelete(false);
         }, 3000);
         if (currentChatId === chatIdToDelete) {
           navigate("/");
@@ -126,22 +125,22 @@ const SidebarRecent = ({
   const chatClass = (chatId) =>
     `group relative flex w-full cursor-pointer items-center justify-between rounded-full mb-2 px-3  pl-5 ${
       chatId === currentChatId
-        ? "bg-[#1f3760] text-white"
-        : "text-[#878e8f] hover:bg-[#3d3f41] active:bg-[#3a3c3e]"
+        ? "bg-blue-200 text-blue-800 dark:bg-[#1f3760] dark:text-white"
+        : "text-[#5a5f5f] hover:bg-[#dde3ea] dark:text-[#878e8f] dark:hover:bg-[#3d3f41]"
     }`;
 
-    // console.log(timestamp)
+  // console.log(timestamp)
 
   return (
     <>
       {!hideSidebar && (
         <div
-          className={`custom-scrollbar mt-8 overflow-x-hidden overflow-y-scroll ${
-            isSignedIn ? "h-[calc(100%_-_15rem)]" : "h-[calc(100%_-_12rem)]"
+          className={`${dark ? "custom-scrollbar" : "light-scrollbar"}  mt-8 overflow-x-hidden overflow-y-scroll ${
+            isSignedIn ? "h-[calc(100%_-_16rem)]" : "h-[calc(100%_-_13rem)]"
           }`}
         >
           <h3
-            className={`${isSignedIn ? "text-[#7d8283]" : "text-white"} ml-5`}
+            className={`${isSignedIn ? "text-[#5a5f5f] dark:text-[#7d8283]" : "text-[#5a5f5f] dark:text-white"} ml-5`}
           >
             Recent
           </h3>
@@ -163,22 +162,16 @@ const SidebarRecent = ({
 
                   <div className="group relative">
                     <BsThreeDotsVertical
-                      className="menu-btns cursor-pointer text-3xl text-white"
-                      onClick={() =>
-                      {
+                      className="menu-btns cursor-pointer text-3xl text-black dark:text-white"
+                      onClick={() => {
                         setOpenMenuId((prev) =>
                           prev === item.id ? null : item.id,
                         ),
-                       
-                       setTimestamp(
-                        {
-                          seconds:item.createdAt.seconds,
-                          nanoseconds:item.createdAt.nanoseconds,
-                        }
-                       )
-                      }
-                      
-                    }
+                          setTimestamp({
+                            seconds: item.createdAt.seconds,
+                            nanoseconds: item.createdAt.nanoseconds,
+                          });
+                      }}
                     />
 
                     <ul
@@ -186,24 +179,24 @@ const SidebarRecent = ({
                         openMenuId === item.id
                           ? "opacity-100"
                           : "pointer-events-none opacity-0"
-                      } absolute -left-30 z-10 bg-[#1b1c1d] whitespace-nowrap text-white shadow shadow-black transition-opacity duration-150 ease-in`}
+                      } absolute -left-30 z-10 rounded-lg bg-[#f0f4f9] whitespace-nowrap text-black shadow shadow-black/50 transition-opacity duration-150 ease-in dark:bg-[#1b1c1d] dark:text-white`}
                     >
-                      <li
-                        
-                        className=" flex items-center gap-5 px-6 py-2 text-sm "
-                      >
-                        <p>Created on : <br/> <TimestampConverter timestamp={timestamp} /></p>
+                      <li className="flex items-center gap-5 px-6 py-2 text-sm">
+                        <p>
+                          Created on : <br />{" "}
+                          <TimestampConverter timestamp={timestamp} />
+                        </p>
                       </li>
-                      <hr className="text-gray-400"/>
+                      <hr className="text-gray-400" />
                       <li
                         onClick={() => handleRenameClick(item.id, item.title)}
-                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#313234]"
+                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]"
                       >
                         <GoPencil className="text-lg" /> Rename
                       </li>
                       <li
                         onClick={() => deleteConversation(item.id)}
-                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#313234]"
+                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]"
                       >
                         <BsTrash className="text-lg" /> Delete
                       </li>
@@ -234,10 +227,14 @@ const SidebarRecent = ({
                 <button
                   onClick={() => setShowAll((prev) => !prev)}
                   aria-label="Show more"
-                  className="group relative flex w-full cursor-pointer items-center gap-2 rounded-full px-3 py-2 pl-5 text-[#a3abac] hover:bg-gray-700 active:bg-[#484a4d]"
+                  className="group relative flex w-full cursor-pointer items-center gap-2 rounded-full px-3 py-2 pl-5 text-[#444848] hover:bg-blue-200 active:bg-blue-300 dark:text-[#a3abac] dark:hover:bg-gray-700 dark:active:bg-[#484a4d]"
                 >
                   <h3>{showAll ? "Show less" : "Show more"}</h3>
-                  <RiArrowDropDownLine className="text-2xl" />
+                  {!showAll ? (
+                    <RiArrowDropDownLine className="text-2xl" />
+                  ) : (
+                    <RiArrowDropUpLine className="text-2xl" />
+                  )}
                 </button>
               )}
 
@@ -255,80 +252,77 @@ const SidebarRecent = ({
                       {item.title}
                     </h3>
                     <div className="group relative">
-                    <BsThreeDotsVertical
-                      className="menu-btns cursor-pointer text-3xl text-white"
-                      onClick={() =>
-                      {
-                        setOpenMenuId((prev) =>
-                          prev === item.id ? null : item.id,
-                        ),
-                       
-                       setTimestamp(
-                        {
-                          seconds:item.createdAt.seconds,
-                          nanoseconds:item.createdAt.nanoseconds,
-                        }
-                       )
-                      }
-                      
-                    }
-                    />
+                      <BsThreeDotsVertical
+                        className="menu-btns cursor-pointer text-3xl text-black dark:text-white"
+                        onClick={() => {
+                          setOpenMenuId((prev) =>
+                            prev === item.id ? null : item.id,
+                          ),
+                            setTimestamp({
+                              seconds: item.createdAt.seconds,
+                              nanoseconds: item.createdAt.nanoseconds,
+                            });
+                        }}
+                      />
 
-                    <ul
+                      <ul
                       className={`${
                         openMenuId === item.id
                           ? "opacity-100"
                           : "pointer-events-none opacity-0"
-                      } absolute -left-30 z-10 bg-[#1b1c1d] whitespace-nowrap text-white shadow shadow-black transition-opacity duration-150 ease-in`}
+                      } absolute -left-30 z-10 rounded-lg bg-[#f0f4f9] whitespace-nowrap text-black shadow shadow-black/50 transition-opacity duration-150 ease-in dark:bg-[#1b1c1d] dark:text-white`}
                     >
-                      <li
-                        
-                        className=" flex items-center gap-5 px-6 py-2 text-sm "
-                      >
-                        <p>Created on : <br/> <TimestampConverter timestamp={timestamp} /></p>
+                      <li className="flex items-center gap-5 px-6 py-2 text-sm">
+                        <p>
+                          Created on : <br />{" "}
+                          <TimestampConverter timestamp={timestamp} />
+                        </p>
                       </li>
-                      <hr className="text-gray-400"/>
+                      <hr className="text-gray-400" />
                       <li
                         onClick={() => handleRenameClick(item.id, item.title)}
-                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#313234]"
+                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]"
                       >
                         <GoPencil className="text-lg" /> Rename
                       </li>
                       <li
                         onClick={() => deleteConversation(item.id)}
-                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#313234]"
+                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]"
                       >
                         <BsTrash className="text-lg" /> Delete
                       </li>
                     </ul>
-                  </div>
+                    </div>
                   </div>
                 ))}
             </div>
           ) : (
             // Not signed in
-            <div className="mt-2 overflow-hidden rounded-lg bg-[#454849] px-4 py-3 pb-6 text-sm text-white">
+            <div className="mt-2 overflow-hidden rounded-lg bg-[#dde3ea] px-4 py-3 pb-6 text-sm dark:bg-[#454849] dark:text-white">
               <p>
-                Sign in to start saving your <br /> chats <br /> Once you're
-                signed in, you can <br /> access your recent chats here.
+                Sign in to start saving your <br /> chats <br />{" "}
+                <span className="text-gray-600 dark:text-white">
+                  Once you're signed in, you can <br /> access your recent chats
+                  here.
+                </span>
               </p>
               <button
                 aria-label="Sign in"
                 onClick={() => setShowModal(true)}
-                className="mt-10 cursor-pointer text-blue-400"
+                className="mt-10 cursor-pointer text-blue-600 dark:text-blue-400"
               >
                 Sign in
               </button>
             </div>
           )}
 
-           <div
-          className={` ${(showDelete) ? "opacity-100" : "opacity-0"} ${
-            !hideSidebar ? "left-5" : "left-0"
-          } absolute pointer-events-none bottom-5 z-[105] rounded-lg bg-black px-4 py-2 text-white transition-opacity duration-300 ease-in`}
-        >
-          Deleted Successfully
-        </div>
+          <div
+            className={` ${showDelete ? "opacity-100" : "opacity-0"} ${
+              !hideSidebar ? "left-5" : "left-0"
+            } pointer-events-none absolute bottom-7 z-[105] rounded-lg bg-black px-4 py-2 text-white transition-opacity duration-300 ease-in`}
+          >
+            Deleted Successfully
+          </div>
         </div>
       )}
     </>

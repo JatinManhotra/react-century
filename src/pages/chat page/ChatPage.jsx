@@ -2,7 +2,6 @@ import { useContext, useEffect, useRef, useState } from "react";
 
 import { CenturyContext } from "../../context/CenturyContext";
 
-
 import { useLocation, useParams } from "react-router-dom";
 
 import logo from "../../assets/logo.png";
@@ -18,7 +17,6 @@ import Modal from "../../components/modal/modal";
 import { auth, db } from "../../config/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useAuth } from "../../context/AuthContext";
-
 
 const ChatPage = () => {
   const {
@@ -36,7 +34,8 @@ const ChatPage = () => {
     setLoading,
     showMoreOptions,
     setShowMoreOptions,
-    hideSidebar,recentChat
+    hideSidebar,
+    recentChat,
   } = useContext(CenturyContext);
 
   const [editingIndex, setEditingIndex] = useState(null);
@@ -50,19 +49,18 @@ const ChatPage = () => {
   const bottomRef = useRef();
   const moreBtnRef = useRef();
 
-  const {setUserData} = useAuth();
+  const { setUserData } = useAuth();
 
- 
-useEffect(() => {
-  if (!id || !recentChat?.length) return;
+  useEffect(() => {
+    if (!id || !recentChat?.length) return;
 
-  const chat = recentChat.find((c) => c.id === id);
-  if (chat) {
-    setMessages(chat.messages);
-  }
-}, [id, recentChat]);
+    const chat = recentChat.find((c) => c.id === id);
+    if (chat) {
+      setMessages(chat.messages);
+    }
+  }, [id, recentChat]);
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchMessages = async () => {
       const user = auth.currentUser;
       if (!user) return;
@@ -72,7 +70,7 @@ useEffect(() => {
 
       if (docSnap.exists()) {
         const data = docSnap.data();
-        const conversation = data.conversations.find(c => c.id === id);
+        const conversation = data.conversations.find((c) => c.id === id);
 
         if (conversation) {
           setMessages(conversation.messages);
@@ -143,34 +141,33 @@ useEffect(() => {
     }
   };
 
- const handleCopy = (text, index) => {
-  navigator.clipboard
-    .writeText(text)
-    .then(() => {
-      setShowMoreOptions(false);
-      setFeedbacks((prev) => ({
-        ...prev,
-        [index]: {
-          ...prev[index],
-          msg: "Copied to clipboard",
-          feedbackVisible: true,
-        },
-      }));
-      setActiveFeedbackIndex(index);
-
-      setTimeout(() => {
+  const handleCopy = (text, index) => {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        setShowMoreOptions(false);
         setFeedbacks((prev) => ({
           ...prev,
-          [index]: { ...prev[index], feedbackVisible: false },
+          [index]: {
+            ...prev[index],
+            msg: "Copied to clipboard",
+            feedbackVisible: true,
+          },
         }));
-        setActiveFeedbackIndex(null);
-      }, 3000);
-    })
-    .catch((err) => {
-      console.error("Failed to copy: ", err);
-    });
-};
+        setActiveFeedbackIndex(index);
 
+        setTimeout(() => {
+          setFeedbacks((prev) => ({
+            ...prev,
+            [index]: { ...prev[index], feedbackVisible: false },
+          }));
+          setActiveFeedbackIndex(null);
+        }, 3000);
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+      });
+  };
 
   function handleTextChange(e) {
     setEditingText(e.target.value);
@@ -220,7 +217,7 @@ useEffect(() => {
     }, 3000);
   }
 
- const handleShare = async () => {
+  const handleShare = async () => {
     const url = window.location.href;
 
     if (navigator.share) {
@@ -230,7 +227,6 @@ useEffect(() => {
           text: "AI chat app by Jatin 👇",
           url,
         });
-        
       } catch (err) {
         console.error("Share failed:", err);
       }
@@ -254,7 +250,7 @@ useEffect(() => {
   }, [messages]);
 
   return (
-    <section className="relative h-screen w-screen bg-[#1b1c1d]">
+    <section className="relative h-screen w-screen bg-white dark:bg-[#1b1c1d]">
       {/* top component with login / signup modal*/}
       <ChatHeader isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} />
 
@@ -263,7 +259,7 @@ useEffect(() => {
 
       {/* ai responses field */}
       <ChatBody
-      handleEditText={handleEditText}
+        handleEditText={handleEditText}
         isSignedIn={isSignedIn}
         messages={messages}
         editingIndex={editingIndex}
@@ -297,7 +293,7 @@ useEffect(() => {
       />
 
       {/* terms and policy */}
-      <ChatTermsAndPolicy isSignedIn={isSignedIn} />
+      <ChatTermsAndPolicy  />
 
       {/* feedback message */}
       <ChatFeedback

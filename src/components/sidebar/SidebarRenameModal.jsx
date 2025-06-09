@@ -55,8 +55,8 @@ const SidebarRenameModal = ({
         className="animate-opacity fixed z-[98] h-screen w-screen bg-black/50"
       ></div>
 
-      <div className="z-[100] flex h-[15rem] w-[30rem] flex-col items-end gap-2 rounded-2xl bg-[#1f1f1f] px-6 py-6">
-        <h1 className="mb-5 self-start text-2xl text-white">
+      <div className="z-[100] flex h-[15rem] w-[30rem] flex-col items-end gap-2 rounded-2xl dark:bg-[#1f1f1f] bg-[#f0f4f9] px-6 py-6">
+        <h1 className="mb-5 self-start text-2xl text-black dark:text-white">
           Rename this chat
         </h1>
 
@@ -64,7 +64,7 @@ const SidebarRenameModal = ({
           rows={1}
           name="rename-field"
           id="rename-field"
-          className="w-full resize-none overflow-hidden rounded-lg border-2 border-blue-300 bg-[#1f1f1f] p-4 text-base text-white outline-none"
+          className="w-full resize-none overflow-hidden rounded-lg border-2 border-blue-600 dark:border-blue-300 text-black dark:bg-[#1f1f1f] p-4 text-lg dark:text-white outline-none"
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
         />
@@ -73,13 +73,13 @@ const SidebarRenameModal = ({
           <button
             disabled={newTitle.trim() === currentTitle.trim()}
             onClick={handleUpdate}
-            className="cursor-pointer rounded-full bg-blue-300 px-5 py-2 text-blue-800 hover:bg-blue-400 disabled:cursor-default disabled:bg-[#27292b] disabled:text-[#7e848b]"
+            className="cursor-pointer rounded-full text-white bg-blue-600 hover:bg-blue-500 dark:bg-blue-300 px-5 py-2 dark:text-blue-800 dark:hover:bg-blue-400 disabled:cursor-default dark:disabled:bg-[#27292b] dark:disabled:text-[#7e848b]"
           >
             Update
           </button>
           <button
             onClick={() => setShowRenameModal(false)}
-            className="cursor-pointer rounded-full px-5 py-2 text-blue-200 hover:bg-gray-800"
+             className="cursor-pointer rounded-full px-5 py-2 text-blue-600 dark:text-blue-200 hover:bg-blue-100 dark:hover:bg-gray-800"
           >
             Cancel
           </button>

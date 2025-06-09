@@ -6,6 +6,7 @@ import WelcomeGreeting from "./WelcomeGreeting.jsx";
 import WelcomeChat from "./WelcomeChat.jsx";
 import WelcomeTermsAndPolicy from "./WelcomeTermsAndPolicy.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
+import logo from "../../assets/logo.png";
 
 const Welcome = () => {
   const {
@@ -22,18 +23,23 @@ const Welcome = () => {
     getOrCreateId,
   } = useContext(CenturyContext);
 
-    const {  loading } = useAuth();
+  const { loading } = useAuth();
 
   if (loading) {
-    return <div className="bg-white text-5xl">
-      <h1>Loading</h1>
-    </div>
+    return (
+      <div className="relative flex h-screen w-screen items-center justify-center ">
+        <div className="div-spinner flex h-75 w-75 items-center justify-center rounded-full"></div>
+        <img
+          className="scale-img absolute top-[50%] left-[50%] w-70 translate-x-[-50%] translate-y-[-50%] rounded-full"
+          src={logo}
+          alt=""
+        />
+      </div>
+    );
   }
 
- 
-
   return (
-    <section className="h-screen w-screen bg-[#1b1c1d]">
+    <section className="h-screen w-screen bg-[#fff] dark:bg-[#1b1c1d]">
       {/* top component with login / signup modal*/}
       <WelcomeHeader isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} />
 

@@ -29,8 +29,6 @@ const Sidebar = () => {
 
   const { user, userData, loading } = useAuth();
 
- 
-
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -38,13 +36,6 @@ const Sidebar = () => {
     setMessages([]);
     navigate("/");
   }
-
-   
-
-
-
-
-
 
   if (loading) {
     return;
@@ -72,7 +63,6 @@ const Sidebar = () => {
 
       {/* recent chats */}
       <SidebarRecent
-     
         messages={messages}
         generatedId={generatedId}
         setGeneratedId={setGeneratedId}

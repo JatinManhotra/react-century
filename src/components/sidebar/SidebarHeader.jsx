@@ -1,8 +1,7 @@
 import React from "react";
 import { IoMenu, IoSearch } from "react-icons/io5";
 
-
-const SidebarHeader = ({hideSidebar,setHideSidebar}) => {
+const SidebarHeader = ({ hideSidebar, setHideSidebar }) => {
   return (
     <div className="flex justify-between text-4xl">
       <button

@@ -31,7 +31,7 @@ const ModalBodyForm = ({
     <form onSubmit={(event) => validateForm(event)} className="px-8">
       {signUpForm && (
         <div>
-          <label htmlFor="name" className="mb-1 block text-sm font-medium text-white">
+          <label htmlFor="name" className="mb-1 block text-sm font-medium text-black dark:text-white ">
             Name
           </label>
           <input
@@ -41,7 +41,7 @@ const ModalBodyForm = ({
             value={name}
             onChange={(e) => setName(e.target.value)}
             onKeyUp={validateName}
-            className={`w-full rounded-lg border px-4 py-2 outline-none transition-all placeholder:text-sm placeholder:text-gray-400 ${
+            className={`w-full rounded-lg border px-4 py-2 outline-none transition-all placeholder:text-sm placeholder:text-gray-600 dark:placeholder:text-gray-400 ${
               nameError.touched
                 ? nameError.error
                   ? "border-red-500"
@@ -54,8 +54,8 @@ const ModalBodyForm = ({
             className={`text-xs ${
               nameError.touched
                 ? nameError.error
-                  ? "text-red-400"
-                  : "text-green-400"
+                  ? "text-red-600 dark:text-red-400"
+                  : "text-green-600 dark:text-green-400"
                 : "opacity-0"
             }`}
           >
@@ -65,7 +65,7 @@ const ModalBodyForm = ({
       )}
 
       <div>
-        <label htmlFor="email" className="mb-1 block text-sm font-medium text-white">
+        <label htmlFor="email" className="mb-1 block text-sm font-medium text-black dark:text-white ">
           Email
         </label>
         <input
@@ -76,7 +76,7 @@ const ModalBodyForm = ({
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           onKeyUp={validateEmail}
-          className={`w-full rounded-lg border px-4 py-2 outline-none transition-all placeholder:text-sm placeholder:text-gray-400 ${
+          className={`w-full rounded-lg border px-4 py-2 outline-none transition-all placeholder:text-sm placeholder:text-gray-600 dark:placeholder:text-gray-400 ${
             emailError.touched
               ? emailError.error
                 ? "border-red-500"
@@ -89,8 +89,8 @@ const ModalBodyForm = ({
           className={`text-xs ${
             emailError.touched
               ? emailError.error
-                ? "text-red-400"
-                : "text-green-400"
+                ? "text-red-600 dark:text-red-400"
+                  : "text-green-600 dark:text-green-400"
               : "opacity-0"
           }`}
         >
@@ -99,7 +99,7 @@ const ModalBodyForm = ({
       </div>
 
       <div>
-        <label htmlFor="password" className="mb-1 block text-sm font-medium text-white">
+        <label htmlFor="password" className="mb-1 block text-sm font-medium text-black dark:text-white ">
           Password
         </label>
         <div className="relative flex items-center">
@@ -111,7 +111,7 @@ const ModalBodyForm = ({
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onKeyUp={signUpForm ? passwordStrength : validatePassword}
-            className={`w-full rounded-lg border px-4 py-2 outline-none transition-all placeholder:text-sm placeholder:text-gray-400 ${
+            className={`w-full rounded-lg border px-4 py-2 outline-none transition-all placeholder:text-sm placeholder:text-gray-600 dark:placeholder:text-gray-400 ${
               signUpForm
                 ? passwordStrengthMsg.touched
                   ? passwordStrengthMsg.border
@@ -127,12 +127,12 @@ const ModalBodyForm = ({
           {showPassword ? (
             <FaRegEyeSlash
               onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute right-1 h-[90%] w-12 cursor-pointer rounded-r-sm bg-[#282a2c] p-2.5 text-lg"
+              className="absolute right-1 h-[90%] w-12 cursor-pointer rounded-r-sm dark:bg-[#282a2c] p-2.5 text-lg"
             />
           ) : (
             <FaRegEye
               onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute right-1 h-[90%] w-12 cursor-pointer rounded-r-sm bg-[#282a2c] p-2.5 text-lg"
+              className="absolute right-1 h-[90%] w-12 cursor-pointer rounded-r-sm dark:bg-[#282a2c] p-2.5 text-lg"
             />
           )}
         </div>
@@ -145,8 +145,8 @@ const ModalBodyForm = ({
             className={`text-xs ${
               passwordError.touched
                 ? passwordError.error
-                  ? "text-red-400"
-                  : "text-green-400"
+                  ? "text-red-600 dark:text-red-400"
+                  : "text-green-600 dark:text-green-400"
                 : "opacity-0"
             }`}
           >
@@ -165,9 +165,9 @@ const ModalBodyForm = ({
               id="checkbox"
               className="rounded border-gray-500 text-indigo-600 accent-indigo-600 focus:ring-indigo-500"
             />
-            <span className="ml-2 text-sm text-white">Remember me</span>
+            <span className="ml-2 text-sm dark:text-white">Remember me</span>
           </label>
-          <a className="cursor-pointer text-sm text-indigo-400 hover:text-indigo-300">
+          <a className="cursor-pointer text-sm text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300">
             Forgot password?
           </a>
         </div>
