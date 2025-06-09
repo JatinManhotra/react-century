@@ -10,34 +10,57 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null); // Firebase user
   const [userData, setUserData] = useState(null); // Firestore name/email
   const [loading, setLoading] = useState(true);
-  
-   
 
-   const { setIsSignedIn, setUsername, recentChat, setRecentChat } = useContext(CenturyContext);
+  const { setIsSignedIn, setUsername, recentChat, setRecentChat, setDark } =
+    useContext(CenturyContext);
 
- useEffect(() => {
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
 
       if (currentUser) {
         setIsSignedIn(true);
+        
         const userRef = doc(db, "users", currentUser.uid);
         const snap = await getDoc(userRef);
 
         if (snap.exists()) {
           const data = snap.data();
           setUserData(data);
-          setUsername(data.name);
-          setRecentChat(data.conversations || []); // ✅ fetch recent chats on login/reload
+          const firstName = data.name.split(" ");
+          setUsername(firstName[0]);
+          setRecentChat(data.conversations || []);
+          setDark(data.dark ?? true);
+          localStorage.setItem("darkMode", String(data.dark ?? true));
+
+
+          if (data.dark) {
+            document.documentElement.classList.add("dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+          }
         } else {
           setUserData(null);
-          setRecentChat([]); // no conversations
+          setRecentChat([]);
+          setDark(true);
+          document.documentElement.classList.add("dark");
         }
       } else {
-          setIsSignedIn(false);
+        setIsSignedIn(false);
         setUsername("");
         setUserData(null);
         setRecentChat([]);
+
+        const storedTheme = localStorage.getItem("darkMode");
+        const prefersDark =
+          storedTheme === null ? true : storedTheme === "true";
+        setDark(prefersDark);
+
+        if (prefersDark) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
       }
 
       setLoading(false); // done with auth and Firestore
@@ -47,7 +70,16 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, userData, setUserData, loading,recentChat, setRecentChat }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        userData,
+        setUserData,
+        loading,
+        recentChat,
+        setRecentChat,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

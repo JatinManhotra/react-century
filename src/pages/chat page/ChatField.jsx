@@ -18,7 +18,7 @@ const ChatField = ({
     <>
     {isSignedIn ? (
         // for logged in users
-        <div className="m-auto flex w-[45rem] flex-col rounded-3xl border border-[#9a9fa5]/50 px-4 py-3 text-[#9a9fa5]">
+        <div className="m-auto prompt-shadow  flex w-[45rem] flex-col rounded-3xl border border-[#9a9fa5]/50 px-4 py-3 text-[#9a9fa5]">
           <input
             placeholder="Ask Century"
              value={promptInput}

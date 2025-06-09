@@ -6,7 +6,7 @@ import user from "../../assets/user.png"; // ✅ Adjust path if needed
 import { CenturyContext } from "../../context/CenturyContext";
 
 const ChatHeader = ({ isSignedIn, setIsSignedIn }) => {
-  const { handleLogout } = useContext(CenturyContext);
+  const { handleLogout, username } = useContext(CenturyContext);
 
   return (
     <div className="flex w-full items-center justify-between px-3 py-2">

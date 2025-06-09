@@ -12,7 +12,7 @@ const WelcomeHeader = ({ isSignedIn, setIsSignedIn }) => {
 
   const navigate = useNavigate()
 
- const {handleLogout} = useContext(CenturyContext)
+ const {handleLogout,username} = useContext(CenturyContext)
 
   return (
      <div className="flex w-full items-center justify-between px-3 py-2">
@@ -49,6 +49,9 @@ const WelcomeHeader = ({ isSignedIn, setIsSignedIn }) => {
               <ul
                 className={`group-hover:opacity-100 group-hover:pointer-events-auto opacity-0 pointer-events-none -right-5 absolute cursor-pointer z-[10] bg-[#1b1c1d] whitespace-nowrap text-white shadow shadow-black w-32 transition-opacity duration-100 ease-in`}
               >
+                <li className="mt-2 text-white text-center text-base mb-2 px-6 py-2 ">
+                  {username}
+                </li>
                 <li onClick={() => {handleLogout(), setIsSignedIn(false)}} className="mt-2 text-red-400 text-base mb-2 flex items-center gap-3 px-6 py-2 hover:bg-[#272729]">
                   <MdLogout className="text-lg" /> Logout
                 </li>

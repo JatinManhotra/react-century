@@ -220,7 +220,7 @@ useEffect(() => {
     }, 3000);
   }
 
-  const handleShare = async () => {
+ const handleShare = async () => {
     const url = window.location.href;
 
     if (navigator.share) {
@@ -245,9 +245,9 @@ useEffect(() => {
     }
   };
 
-  useEffect(() => {
-    console.log(messages);
-  }, [messages]);
+  // useEffect(() => {
+  //   console.log(messages);
+  // }, [messages]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });

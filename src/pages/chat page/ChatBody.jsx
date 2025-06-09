@@ -99,7 +99,7 @@ const ChatBody = ({
                     </div>
                   )
                 ) : (
-                  <div className="prose prose-invert animate-height max-w-none self-center overflow-hidden">
+                  <div className="prose prose-invert break-words animate-height max-w-full self-start overflow-hidden">
                     <ReactMarkdown >{msg.text}</ReactMarkdown>
                   </div>
                 )}

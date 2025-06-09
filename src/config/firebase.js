@@ -5,7 +5,7 @@ import { getFirestore } from "firebase/firestore";
 import { enableNetwork } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDwzexecC1EFTP9Qjq7_6_T2F0Yom6TqKE",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "century-ai-e4d47.firebaseapp.com",
   projectId: "century-ai-e4d47",
   storageBucket: "century-ai-e4d47.appspot.com",

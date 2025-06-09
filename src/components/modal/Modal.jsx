@@ -268,7 +268,8 @@ const Modal = () => {
         email
       })
 
-      setUsername(name)
+      const firstName = name.split(" ")
+        setUsername(firstName[0])
       setShowModal(false);
       console.log("Signup successful")
     } catch (error) {
@@ -287,7 +288,8 @@ const Modal = () => {
 
       if(docSnap.exists()){
         const userData = docSnap.data();
-        setUsername(userData.name)
+        const firstName = userData.name.split(" ")
+        setUsername(firstName[0])
         setShowModal(false)
       }else{
         console.log("No such user exists")

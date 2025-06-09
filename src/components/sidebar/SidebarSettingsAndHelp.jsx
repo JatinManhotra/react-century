@@ -23,7 +23,7 @@ const SidebarSettingsAndHelp = ({
             aria-label="Settings & help"
             className={`${
               toggleSidebarOptions
-                ? "bg-gray-800 text-white"
+                ? "bg-[#1f3760] text-white"
                 : "hover:bg-[#3d3f41]"
             } group relative flex w-full cursor-pointer items-center gap-3 rounded-full px-3 py-2 pl-5 text-[#878e8f] active:bg-[#484a4d]`}
           >

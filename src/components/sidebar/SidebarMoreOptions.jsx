@@ -12,6 +12,8 @@ import { HiOutlineUserPlus } from "react-icons/hi2";
 import { IoExtensionPuzzleOutline } from "react-icons/io5";
 import { LuCircleCheckBig } from "react-icons/lu";
 import { CenturyContext } from "../../context/CenturyContext";
+import { auth, db } from "../../config/firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 
 const SidebarMoreOptions = ({
@@ -21,15 +23,31 @@ const SidebarMoreOptions = ({
 }) => {
   const { dark, setDark } = useContext(CenturyContext);
 
-  function setLightMode() {
-    document.documentElement.classList.remove("dark");
-    setDark(false);
-  }
+ async function setLightMode() {
+  document.documentElement.classList.remove("dark");
+  localStorage.setItem("darkMode", "false"); // or "false"
 
-  function setDarkMode() {
-    document.documentElement.classList.add("dark");
-    setDark(true);
+  setDark(false);
+
+  const user = auth.currentUser;
+  if (user) {
+    const userRef = doc(db, "users", user.uid);
+    await setDoc(userRef, { dark: false }, { merge: true });
   }
+}
+
+async function setDarkMode() {
+  document.documentElement.classList.add("dark");
+  localStorage.setItem("darkMode", "true"); // or "false"
+
+  setDark(true);
+
+  const user = auth.currentUser;
+  if (user) {
+    const userRef = doc(db, "users", user.uid);
+    await setDoc(userRef, { dark: true }, { merge: true });
+  }
+}
 
   return (
     <ul

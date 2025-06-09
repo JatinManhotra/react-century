@@ -155,6 +155,7 @@ const CenturyContextProvider = ({ children }) => {
         userRef,
         {
           conversations: updatedConversations,
+          dark,
         },
         { merge: true }, // to avoid overwriting name/email
       );
