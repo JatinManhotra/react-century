@@ -1,18 +1,18 @@
-import React, { useContext } from 'react';
-import { CenturyContext } from '../context/CenturyContext';
+import { useContext } from "react";
+import { CenturyContext } from "../context/CenturyContext";
 
 const useFeedbackMsg = () => {
   const { setGlobalFeedback } = useContext(CenturyContext);
 
-  const handleFeedback = (msg, error) => {
-    setGlobalFeedback({ msg: msg, error: error });
+  const handleFeedback = (msg, errorIcon) => {
+    setGlobalFeedback({ msg: msg, visible: true, errorIcon: errorIcon });
 
     setTimeout(() => {
-      setGlobalFeedback((prev) => ({ ...prev, msg:"", error: false })); // Clear message as well
+      setGlobalFeedback((prev) => ({ ...prev, visible: false }));
     }, 3000);
   };
 
-  return { handleFeedback }; // Return the function to be used
+  return { handleFeedback };
 };
 
 export default useFeedbackMsg;

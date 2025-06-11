@@ -1,79 +1,80 @@
-import React, { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { generateGeminiResponse } from "../services/geminiService";
-import {
-  doc,
-  Timestamp,
-  getDoc,
-  setDoc,
-} from "firebase/firestore";
+import { doc, Timestamp, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
-import {
-  Navigate,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
-import { useAuth } from "./AuthContext";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { signOut } from "firebase/auth";
+import useFeedbackMsg from "../hooks/useFeedbackMsg";
 
 export const CenturyContext = createContext();
 
 const CenturyContextProvider = ({ children }) => {
   // declaring states
-  const [generatedId, setGeneratedId] = useState(null);
+  const [generatedId, setGeneratedId] = useState(null); // random ids to navigate on new chat
+
   const [isSignedIn, setIsSignedIn] = useState(false);
+
   const [hideSidebar, setHideSidebar] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [promptInput, setPromptInput] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState(false);
-  const [messages, setMessages] = useState([]);
 
-  const [globalFeedback, setGlobalFeedback] = useState({msg:"", error:false})
+  const [promptInput, setPromptInput] = useState(""); // user prompt
+
+  const [loading, setLoading] = useState(false); // if data is been fetched after sending prompt
+  const [errorMsg, setErrorMsg] = useState(false); // if any error occurred
+
+  const [messages, setMessages] = useState([]); // prompt + ai responses
+
+  const [globalFeedback, setGlobalFeedback] = useState({
+    msg: "",
+    visible: false,
+    errorIcon: false,
+  });
 
   const [dark, setDark] = useState(true);
 
-  const [showMoreOptions, setShowMoreOptions] = useState(false);
-  const [toggleSidebarOptions, setToggleSidebarOptions] = useState(false);
+  const [showMoreOptions, setShowMoreOptions] = useState(false); // more options dialog in ai responses
+
+   const [showOptions, setShowOptions] = useState({show:false, title:""}) // show these options in mobile devices
+
+  const [toggleSidebarOptions, setToggleSidebarOptions] = useState(false); // more options dialog in sidebar settings and help btn
 
   const [username, setUsername] = useState("");
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { id } = useParams();
 
-  const [recentChat, setRecentChat] = useState();
+  const [recentChat, setRecentChat] = useState(); // user's recent chats in sidebar
 
+  // sets the message in global feedback
+  const handleFeedback = (msg, errorIcon) => {
+  setGlobalFeedback({ msg, visible: true, errorIcon });
+  setTimeout(() => {
+    setGlobalFeedback((prev) => ({ ...prev, visible: false }));
+  }, 3000);
+};
+
+  // generate random id after new chat, and after sending prompt
   const getOrCreateId = () => {
     const id = crypto.randomUUID();
     setGeneratedId(id);
     return id;
   };
 
-  useEffect(()=>{
-    if(dark){
-      document.body.style.backgroundColor = "#282a2c";
-    }else{
-      document.body.style.backgroundColor = "#fff";
+  // logout user
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate(`/`);
+      handleFeedback("Log out successfully", false);
+    } catch (error) {
+      console.log(error);
+      handleFeedback("Error occurred during logout", true);
     }
-  },[dark])
-
-   const handleLogout = async () => {
-      try {
-        await signOut(auth);
-        navigate(`/`)
-        console.log("User logged out")
-      } catch (error) {
-        console.log("Logout error",error)
-      }
-    }
-
-  // console.log(getOrCreateId());
+  };
 
   // fetch response from api
   async function handleSubmit(prompt, generatedId) {
     try {
-      // Only navigate to /chat/:id the first time
       setPromptInput("");
 
       // Navigate if not already on the correct route
@@ -83,21 +84,19 @@ const CenturyContextProvider = ({ children }) => {
       if (currentPath !== expectedPath) {
         navigate(expectedPath);
       }
+
       const userMsg = { id: generatedId, role: "user", text: prompt };
-       setMessages((prev) => [...prev, userMsg]);
+      setMessages((prev) => [...prev, userMsg]);
 
-      setLoading(true);
+      setLoading(true); // data is being fetched
 
-       // Show user message and loading immediately
-    const data = await generateGeminiResponse(prompt); // AI response
-
-    const aiMsg = { id: generatedId, role: "ai", text: data };
-      
+      const data = await generateGeminiResponse(prompt); // AI response
+      const aiMsg = { id: generatedId, role: "ai", text: data };
 
       setMessages((prev) => [...prev, aiMsg]);
 
-    const conversation = [userMsg, aiMsg];
-    saveConversation(conversation, prompt, generatedId);
+      const conversation = [userMsg, aiMsg];
+      saveConversation(conversation, prompt, generatedId); // pass conversation to store in db
 
       setLoading(false);
     } catch (error) {
@@ -133,6 +132,7 @@ const CenturyContextProvider = ({ children }) => {
           // Append to existing conversation
           const convo = existing[convoIndex];
           convo.messages = [...convo.messages, ...newMessageObjs];
+
           updatedConversations = [
             ...existing.slice(0, convoIndex),
             convo,
@@ -171,14 +171,13 @@ const CenturyContextProvider = ({ children }) => {
         { merge: true }, // to avoid overwriting name/email
       );
 
-       setRecentChat(updatedConversations);
+      setRecentChat(updatedConversations);
 
       console.log("Conversation saved ✅");
     } catch (error) {
       console.error("Error saving conversation ❌", error);
     }
   };
-
 
   // use enter key to send prompts
   function fetchPrompt(e, prompt, generatedId) {
@@ -201,6 +200,15 @@ const CenturyContextProvider = ({ children }) => {
 
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
+
+  // sets the body background color on reload
+  useEffect(() => {
+    if (dark) {
+      document.body.style.backgroundColor = "#282a2c";
+    } else {
+      document.body.style.backgroundColor = "#fff";
+    }
+  }, [dark]);
 
   // auto hide Sidebar on mobile devices
   useEffect(() => {
@@ -248,7 +256,13 @@ const CenturyContextProvider = ({ children }) => {
         setToggleSidebarOptions,
         username,
         setUsername,
-        recentChat, setRecentChat,handleLogout,globalFeedback, setGlobalFeedback
+        recentChat,
+        setRecentChat,
+        handleLogout,
+        globalFeedback,
+        setGlobalFeedback,
+        showOptions,
+        setShowOptions
       }}
     >
       {children}

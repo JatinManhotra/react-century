@@ -1,7 +1,4 @@
-
-import React from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-
 
 const ModalBodyForm = ({
   signUpForm,
@@ -24,24 +21,25 @@ const ModalBodyForm = ({
   allErrorsMsg,
   validateForm,
 }) => {
-
-  
-
   return (
     <form onSubmit={(event) => validateForm(event)} className="px-8">
       {signUpForm && (
         <div>
-          <label htmlFor="name" className="mb-1 block text-sm font-medium text-black dark:text-white ">
+          <label
+            htmlFor="name"
+            className="mb-1 block text-sm font-medium text-black dark:text-white"
+          >
             Name
           </label>
+
           <input
-          autoComplete="on"
+            autoComplete="on"
             type="text"
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             onKeyUp={validateName}
-            className={`w-full rounded-lg border px-4 py-2 outline-none transition-all placeholder:text-sm placeholder:text-gray-600 dark:placeholder:text-gray-400 ${
+            className={`w-full rounded-lg border px-4 py-2 transition-all outline-none placeholder:text-sm placeholder:text-gray-600 dark:placeholder:text-gray-400 ${
               nameError.touched
                 ? nameError.error
                   ? "border-red-500"
@@ -50,6 +48,7 @@ const ModalBodyForm = ({
             }`}
             placeholder="Your name"
           />
+
           <span
             className={`text-xs ${
               nameError.touched
@@ -65,18 +64,21 @@ const ModalBodyForm = ({
       )}
 
       <div>
-        <label htmlFor="email" className="mb-1 block text-sm font-medium text-black dark:text-white ">
+        <label
+          htmlFor="email"
+          className="mb-1 block text-sm font-medium text-black dark:text-white"
+        >
           Email
         </label>
+
         <input
           autoComplete="on"
-
           type="email"
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           onKeyUp={validateEmail}
-          className={`w-full rounded-lg border px-4 py-2 outline-none transition-all placeholder:text-sm placeholder:text-gray-600 dark:placeholder:text-gray-400 ${
+          className={`w-full rounded-lg border px-4 py-2 transition-all outline-none placeholder:text-sm placeholder:text-gray-600 dark:placeholder:text-gray-400 ${
             emailError.touched
               ? emailError.error
                 ? "border-red-500"
@@ -85,12 +87,13 @@ const ModalBodyForm = ({
           }`}
           placeholder="your@email.com"
         />
+
         <span
           className={`text-xs ${
             emailError.touched
               ? emailError.error
                 ? "text-red-600 dark:text-red-400"
-                  : "text-green-600 dark:text-green-400"
+                : "text-green-600 dark:text-green-400"
               : "opacity-0"
           }`}
         >
@@ -99,45 +102,53 @@ const ModalBodyForm = ({
       </div>
 
       <div>
-        <label htmlFor="password" className="mb-1 block text-sm font-medium text-black dark:text-white ">
+        <label
+          htmlFor="password"
+          className="mb-1 block text-sm font-medium text-black dark:text-white"
+        >
           Password
         </label>
+
         <div className="relative flex items-center">
           <input
-          autoComplete="on"
-
+            autoComplete="on"
             type={showPassword ? "text" : "password"}
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onKeyUp={signUpForm ? passwordStrength : validatePassword}
-            className={`w-full rounded-lg border px-4 py-2 outline-none transition-all placeholder:text-sm placeholder:text-gray-600 dark:placeholder:text-gray-400 ${
+            className={`w-full rounded-lg border px-4 py-2 transition-all outline-none placeholder:text-sm placeholder:text-gray-600 dark:placeholder:text-gray-400 ${
               signUpForm
                 ? passwordStrengthMsg.touched
                   ? passwordStrengthMsg.border
                   : "border-gray-500"
                 : passwordError.touched
-                ? passwordError.error
-                  ? "border-red-500"
-                  : "border-green-500"
-                : "border-gray-500"
+                  ? passwordError.error
+                    ? "border-red-500"
+                    : "border-green-500"
+                  : "border-gray-500"
             }`}
             placeholder="••••••••"
           />
+
+          {/* eye icon to toggle show and hide password */}
           {showPassword ? (
             <FaRegEyeSlash
               onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute right-1 h-[90%] w-12 cursor-pointer rounded-r-sm dark:bg-[#282a2c] p-2.5 text-lg"
+              className="absolute right-1 h-[90%] w-12 cursor-pointer rounded-r-sm p-2.5 text-lg dark:bg-[#282a2c]"
             />
           ) : (
             <FaRegEye
               onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute right-1 h-[90%] w-12 cursor-pointer rounded-r-sm dark:bg-[#282a2c] p-2.5 text-lg"
+              className="absolute right-1 h-[90%] w-12 cursor-pointer rounded-r-sm p-2.5 text-lg dark:bg-[#282a2c]"
             />
           )}
         </div>
+
         {signUpForm ? (
-          <span className={`text-xs ${passwordStrengthMsg.touched ? passwordStrengthMsg.color : "opacity-0"}`}>
+          <span
+            className={`text-xs ${passwordStrengthMsg.touched ? passwordStrengthMsg.color : "opacity-0"}`}
+          >
             {passwordStrengthMsg.touched ? passwordStrengthMsg.msg : "Error"}
           </span>
         ) : (
@@ -157,16 +168,20 @@ const ModalBodyForm = ({
 
       {!signUpForm && (
         <div className="mt-2 flex items-center justify-between">
-          <label htmlFor="checkbox" className="flex cursor-pointer items-center">
+          <label
+            htmlFor="checkbox"
+            className="flex cursor-pointer items-center"
+          >
             <input
-          autoComplete="on"
-
+              autoComplete="on"
               type="checkbox"
               id="checkbox"
               className="rounded border-gray-500 text-indigo-600 accent-indigo-600 focus:ring-indigo-500"
             />
+
             <span className="ml-2 text-sm dark:text-white">Remember me</span>
           </label>
+
           <a className="cursor-pointer text-sm text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300">
             Forgot password?
           </a>
@@ -174,8 +189,9 @@ const ModalBodyForm = ({
       )}
 
       <button
+        aria-label="Submit form"
         type="submit"
-        className="mt-4 w-full rounded-lg bg-indigo-600 py-2.5 font-medium text-white transition-colors cursor-pointer hover:bg-indigo-700"
+        className="mt-4 w-full cursor-pointer rounded-lg bg-indigo-600 py-2.5 font-medium text-white transition-colors hover:bg-indigo-700"
       >
         {signUpForm ? "Sign Up" : "Log In"}
       </button>

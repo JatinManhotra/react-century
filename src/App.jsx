@@ -10,7 +10,7 @@ import { FaCircleCheck } from "react-icons/fa6";
 import { MdError } from "react-icons/md";
 
 const App = () => {
-  const { globalFeedback, setGlobalFeedback } = useContext(CenturyContext);
+  const { globalFeedback } = useContext(CenturyContext);
 
   return (
     <AuthProvider>
@@ -26,9 +26,9 @@ const App = () => {
             <Route path="/chat/:id" element={<ChatPage />} />
           </Routes>
           <div
-            className={`${globalFeedback.error ? "opacity-100" : "opacity-0"} pointer-events-none absolute top-5 left-[50%] z-[101] flex translate-x-[-50%] items-center gap-2 rounded-lg bg-black px-4 py-2 text-white transition-opacity duration-300 ease-in`}
+            className={`${globalFeedback.visible ? "opacity-100" : "opacity-0"} pointer-events-none absolute top-5 left-[50%] z-[101] flex translate-x-[-50%] items-center gap-2 rounded-lg bg-black px-4 py-2 text-white transition-opacity duration-300 ease-in`}
           >
-            {globalFeedback.error ? (
+            {globalFeedback.errorIcon ? (
               <MdError className="text-lg text-red-500" />
             ) : (
               <FaCircleCheck className="text-lg text-green-500" />

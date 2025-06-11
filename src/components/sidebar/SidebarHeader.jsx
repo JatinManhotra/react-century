@@ -1,4 +1,3 @@
-import React from "react";
 import { IoMenu, IoSearch } from "react-icons/io5";
 
 const SidebarHeader = ({ hideSidebar, setHideSidebar }) => {

@@ -20,6 +20,7 @@
   }
 }
 
+/* styles to make the autofill content respective to the theme */
 @layer utilities {
   input:-webkit-autofill {
     -webkit-text-fill-color: black !important;
@@ -43,6 +44,7 @@ body {
   height: 100vh;
 }
 
+/* dark mode scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
   appearance: none;
   width: 0.625rem;
@@ -58,6 +60,7 @@ body {
   background-color: rgb(77, 77, 77);
 }
 
+/* light mode scrollbar */
 .light-scrollbar::-webkit-scrollbar {
   appearance: none;
   width: 0.625rem;
@@ -73,6 +76,7 @@ body {
   background-color: #a3a8ad;
 }
 
+/* box shadow for prompt field in dark mode */
 .prompt-shadow {
   box-shadow: 3px -16px 54px 13px rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 3px -16px 54px 13px rgba(0, 0, 0, 0.3);

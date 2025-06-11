@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { CenturyContext } from "../../context/CenturyContext";
 import Modal from "../../components/modal/modal.jsx";
 import WelcomeHeader from "./WelcomeHeader.jsx";
@@ -13,26 +13,24 @@ const Welcome = () => {
     isSignedIn,
     setIsSignedIn,
     showModal,
-    setShowModal,
     handleSubmit,
     promptInput,
     setPromptInput,
     fetchPrompt,
-    generatedId,
-    setGeneratedId,
     getOrCreateId,
   } = useContext(CenturyContext);
 
   const { loading } = useAuth();
 
+  // shows a loading ui when auth is in progress
   if (loading) {
     return (
-      <div className="relative flex h-screen w-screen items-center justify-center ">
+      <div className="relative flex h-screen w-screen bg-[#fff] dark:bg-[#1b1c1d] items-center justify-center ">
         <div className="div-spinner flex h-75 w-75 items-center justify-center rounded-full"></div>
         <img
           className="scale-img absolute top-[50%] left-[50%] w-70 translate-x-[-50%] translate-y-[-50%] rounded-full"
           src={logo}
-          alt=""
+          alt="Century logo"
         />
       </div>
     );

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { CenturyContext } from "../../context/CenturyContext";
 import logo from "../../assets/logo.png";
 import { BiSolidXCircle } from "react-icons/bi";
@@ -12,7 +12,7 @@ const ModalHeader = ({ signUpForm }) => {
       <h2>{signUpForm ? "Sign Up" : "Log In"} To Century</h2>
       <BiSolidXCircle
         onClick={() => setShowModal(false)}
-        className="absolute right-3 top-3 cursor-pointer"
+        className="absolute top-3 right-3 cursor-pointer"
       />
     </div>
   );

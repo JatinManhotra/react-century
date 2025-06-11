@@ -3,12 +3,18 @@ import { CenturyContext } from "../../context/CenturyContext";
 import ModalBodyForm from "./ModalBodyForm";
 import ModalHeader from "./ModalHeader";
 import ModalFooter from "./ModalFooter";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { auth, db } from "../../config/firebase";
 import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
+import useFeedbackMsg from "../../hooks/useFeedbackMsg";
 
 const Modal = () => {
-  const { setShowModal,username, setUsername } = useContext(CenturyContext);
+  const { setShowModal, setUsername } = useContext(CenturyContext);
+
+  const { handleFeedback } = useFeedbackMsg();
 
   // declaring states
   const [showPassword, setShowPassword] = useState(false);
@@ -28,6 +34,8 @@ const Modal = () => {
     touched: false,
   });
   const [password, setPassword] = useState("");
+
+  // password strength indicator state
   const [passwordStrengthMsg, setPasswordStrengthMsg] = useState({
     msg: "",
     border: "",
@@ -40,6 +48,7 @@ const Modal = () => {
     touched: false,
   });
 
+  // all errors state
   const [allErrorsMsg, setAllErrorsMsg] = useState({
     opacity: "",
     msg: "",
@@ -93,6 +102,8 @@ const Modal = () => {
       });
       return false;
     }
+
+    // firebase auth requires 6 digits password
     if (password.length < 6) {
       setPasswordError({
         msg: "Password can only be 6 or more characters long",
@@ -147,6 +158,7 @@ const Modal = () => {
     }
   }
 
+  // executes on form submission
   async function validateForm(event) {
     event.preventDefault();
 
@@ -162,6 +174,8 @@ const Modal = () => {
           msg: "All input fields are empty",
           error: true,
         });
+
+        // auto hides after 3 sec
         setTimeout(() => {
           setAllErrorsMsg((prev) => ({
             ...prev,
@@ -192,18 +206,21 @@ const Modal = () => {
         }, 3000);
         return;
       }
+
+      // sends the credentials to firebase db
       try {
-      await handleSignUp(name, email, password);
-      setIsSignedIn(true);
-      
-       // if you use this
-    } catch (error) {
-      setAllErrorsMsg({
-        opacity: "opacity-100",
-        msg: "Signup failed. Try again.",
-        error: true,
-      });
-    }
+        await handleSignUp(name, email, password);
+        setIsSignedIn(true);
+
+    
+      } catch (error) {
+        setAllErrorsMsg({
+          opacity: "opacity-100",
+          msg: "Signup failed. Try again.",
+          error: true,
+        });
+
+      }
     } else {
       // for login page
       if (email.trim().length === 0 || password.trim().length === 0) {
@@ -238,82 +255,89 @@ const Modal = () => {
         return;
       }
 
-       try {
-      await handleLogIn(email, password);
-      setIsSignedIn(true); 
-      
-      // if you use this
-    } catch (error) {
-      setAllErrorsMsg({
-        opacity: "opacity-100",
-        msg: "Login failed. Try again.",
-        error: true,
-      });
-    }
-
-   
-
-
+      try {
+        await handleLogIn(email, password);
+        setIsSignedIn(true);
+      } catch (error) {
+        setAllErrorsMsg({
+          opacity: "opacity-100",
+          msg: "Login failed. Try again.",
+          error: true,
+        });
+      }
     }
   }
 
   // New user signup logic
-  const handleSignUp =  async (name, email, password) => {
+  const handleSignUp = async (name, email, password) => {
     try {
-      const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
       const user = userCredentials.user;
 
       await setDoc(doc(db, "users", user.uid), {
-        name : name,
-        email : email,
-         dark: true,
-      conversations: [],
-      createdAt: Timestamp.now(),
-      })
+        // initial user data after signed up
+        name: name,
+        email: email,
+        dark: true,
+        conversations: [],
+        createdAt: Timestamp.now(),
+      });
 
-      const firstName = name.split(" ")
-        setUsername(firstName[0])
+      const firstName = name.split(" ");
+      setUsername(firstName[0]); // shows the users's first name if they use their full name
       setShowModal(false);
-      console.log("Signup successful")
+      handleFeedback("Signup successful", false);
     } catch (error) {
-      console.log("Signup failed",error)
+      console.log(error);
+      handleFeedback(error.message, true);
     }
-  }
+  };
 
   // Existing user login logic
   const handleLogIn = async (email, password) => {
     try {
-      const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
       const user = userCredentials.user;
 
-      const docRef = doc(db,"users",user.uid);
+      const docRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(docRef);
 
-      if(docSnap.exists()){
+      if (docSnap.exists()) {
         const userData = docSnap.data();
-        const firstName = userData.name.split(" ")
-        setUsername(firstName[0])
-        setShowModal(false)
-      }else{
-        console.log("No such user exists")
+        const firstName = userData.name.split(" ");
+        setUsername(firstName[0]);
+        setShowModal(false);
+        handleFeedback("Login Successful", false);
+      } else {
+        handleFeedback("No such user exists", true);
       }
     } catch (error) {
-      console.log("Login failed",error)
+      console.log(error);
+      handleFeedback(error.message, true);
     }
-  }
+  };
 
   return (
     <div className="fixed top-0 left-0 z-[99] flex h-screen w-screen items-center justify-center">
       {/* faint black background for modal */}
       <div
         onClick={() => setShowModal(false)}
-        className="animate-opacity z-[98] fixed h-screen w-screen bg-black/50"
+        className="animate-opacity fixed z-[98] h-screen w-screen bg-black/50"
       ></div>
 
       {/* modal component */}
-      <div className="pop-down z-[100] w-full max-w-md rounded-xl text-black bg-[#f0f4f9] dark:bg-[#282a2c] dark:text-white shadow-lg">
+      <div className="pop-down z-[100] w-full max-w-md rounded-xl bg-[#f0f4f9] text-black shadow-lg dark:bg-[#282a2c] dark:text-white">
         {/* logo and text with close icon */}
         <ModalHeader signUpForm={signUpForm} />
+
         {/* ModalBody form */}
         <ModalBodyForm
           signUpForm={signUpForm}
@@ -336,7 +360,7 @@ const Modal = () => {
           allErrorsMsg={allErrorsMsg}
           validateForm={validateForm}
         />
-        
+
         <ModalFooter signUpForm={signUpForm} setSignUpForm={setSignUpForm} />
       </div>
     </div>

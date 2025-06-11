@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { FaGear } from "react-icons/fa6";
 import SidebarMoreOptions from "./SidebarMoreOptions";
 import { CenturyContext } from "../../context/CenturyContext";
@@ -6,11 +6,12 @@ import { CenturyContext } from "../../context/CenturyContext";
 const SidebarSettingsAndHelp = ({
   showMoreOptions,
   setShowMoreOptions,
-
   collapsed,
 }) => {
   const { hideSidebar, toggleSidebarOptions, setToggleSidebarOptions } =
     useContext(CenturyContext);
+
+    
 
   return (
     <>
@@ -30,6 +31,7 @@ const SidebarSettingsAndHelp = ({
             <h3 className="overflow-hidden">Settings & help</h3>
             <p className="side-tooltip -right-32">Settings & help</p>
           </button>
+
           <SidebarMoreOptions
             toggleSidebarOptions={toggleSidebarOptions}
             setToggleSidebarOptions={setToggleSidebarOptions}
@@ -49,10 +51,12 @@ const SidebarSettingsAndHelp = ({
                   toggleSidebarOptions
                     ? "bg-blue-200 text-blue-800 dark:bg-[#1f3760] dark:text-white"
                     : "hover:bg-[#dde3ea] dark:hover:bg-[#3d3f41]"
-                } " " rounded-full p-2 text-4xl text-[#525657] active:bg-[#b5bac0] dark:active:bg-[#484a4d]`}
+                } rounded-full p-2 text-4xl text-[#525657] active:bg-[#b5bac0] dark:active:bg-[#484a4d]`}
               />
+
               <p className="side-tooltip -right-32">Settings & help</p>
             </button>
+
             <SidebarMoreOptions
               collapsed
               toggleSidebarOptions={toggleSidebarOptions}

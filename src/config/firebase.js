@@ -1,4 +1,3 @@
-
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
@@ -11,7 +10,7 @@ const firebaseConfig = {
   storageBucket: "century-ai-e4d47.appspot.com",
   messagingSenderId: "759047094542",
   appId: "1:759047094542:web:0782ee061474580422175f",
-  measurementId: "G-1HZ3YTK88M"
+  measurementId: "G-1HZ3YTK88M",
 };
 
 // Initialize Firebase

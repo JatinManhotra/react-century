@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "../config/firebase"; // your firebase setup
+import { auth, db } from "../config/firebase";
 import { CenturyContext } from "./CenturyContext";
 
 const AuthContext = createContext();
@@ -9,7 +9,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null); // Firebase user
   const [userData, setUserData] = useState(null); // Firestore name/email
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); // Is Firestore data loading?
 
   const { setIsSignedIn, setUsername, recentChat, setRecentChat, setDark } =
     useContext(CenturyContext);
@@ -20,7 +20,6 @@ export const AuthProvider = ({ children }) => {
 
       if (currentUser) {
         setIsSignedIn(true);
-        
         const userRef = doc(db, "users", currentUser.uid);
         const snap = await getDoc(userRef);
 
@@ -31,10 +30,10 @@ export const AuthProvider = ({ children }) => {
           setUsername(firstName[0]);
           setRecentChat(data.conversations || []);
           setDark(data.dark ?? true);
-          localStorage.setItem("darkMode", String(data.dark ?? true));
-
+          localStorage.setItem("darkMode", String(data.dark ?? true)); // sets theme mode in localstorage and keeps it after user logs out
 
           if (data.dark) {
+            // sets the theme
             document.documentElement.classList.add("dark");
           } else {
             document.documentElement.classList.remove("dark");

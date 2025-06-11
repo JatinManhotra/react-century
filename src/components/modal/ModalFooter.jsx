@@ -1,5 +1,3 @@
-import React from "react";
-
 const ModalFooter = ({ signUpForm, setSignUpForm }) => {
   return (
     <>

@@ -1,21 +1,17 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CenturyContext } from "../../context/CenturyContext";
-
 import SidebarHeader from "./SidebarHeader";
 import SidebarChatAndExploreBtn from "./SidebarChatAndExploreBtn";
 import SidebarRecent from "./SidebarRecent";
 import SidebarSettingsAndHelp from "./SidebarSettingsAndHelp";
 import { useAuth } from "../../context/AuthContext";
-import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "../../config/firebase";
 
 const Sidebar = () => {
   const {
     isSignedIn,
     hideSidebar,
     setHideSidebar,
-    setShowModal,
     messages,
     setMessages,
     generatedId,
@@ -27,7 +23,7 @@ const Sidebar = () => {
     setToggleSidebarOptions,
   } = useContext(CenturyContext);
 
-  const { user, userData, loading } = useAuth();
+  const { loading } = useAuth();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -38,6 +34,7 @@ const Sidebar = () => {
   }
 
   if (loading) {
+    // hides the sidebar when the data is been fetched from firestore
     return;
   }
 

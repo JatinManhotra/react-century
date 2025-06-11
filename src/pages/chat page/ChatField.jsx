@@ -14,30 +14,35 @@ const ChatField = ({
   handleSubmit,
   id,
 }) => {
-  const {dark} = useContext(CenturyContext)
+  const { dark } = useContext(CenturyContext);
   return (
-
-
     <>
       {isSignedIn ? (
+
         // for logged in users
-        <div className={`${dark ? "prompt-shadow" : ""} m-auto flex w-[45rem] flex-col rounded-3xl border border-[#595c5f]/50 px-4 py-3 text-[#595c5f] dark:border-[#9a9fa5]/50 dark:text-[#868a8f]`}>
+        <div
+          className={`${dark ? "prompt-shadow" : ""} m-auto flex w-[45rem] flex-col rounded-3xl border border-[#595c5f]/50 px-4 py-3 text-[#595c5f] dark:border-[#9a9fa5]/50 dark:text-[#868a8f]`}
+        >
           <input
             placeholder="Ask Century"
             value={promptInput}
             onChange={(e) => setPromptInput(e.target.value)}
             onKeyDown={(e) => fetchPrompt(e, promptInput, id)}
-             className="flex-1 border-none px-3 text-base text-[#505050] outline-none placeholder:text-[#595c5f] dark:text-white dark:placeholder:text-[#9a9fa5]"
+            className="flex-1 border-none px-3 text-base text-[#505050] outline-none placeholder:text-[#595c5f] dark:text-white dark:placeholder:text-[#9a9fa5]"
             type="text"
             name="chat-field"
             id="chat-field"
           />
+
           <div className="mt-6 flex items-center justify-between">
+
             <div className="flex items-center gap-3">
+
               <div className="group relative">
                 <GoPlus className="menu-btns text-4xl text-[#595c5f] dark:text-[#868a8f]" />
                 <p className="bottom-tooltip">Add files</p>
               </div>
+
               <div className="group relative">
                 <button
                   aria-label="Deep research"
@@ -48,6 +53,7 @@ const ChatField = ({
                 </button>
                 <p className="bottom-tooltip">Get in depth answers</p>
               </div>
+
               <div className="group relative">
                 <button
                   aria-label="Canvas"
@@ -58,8 +64,11 @@ const ChatField = ({
                 </button>
                 <p className="bottom-tooltip">Create docs and apps</p>
               </div>
+
             </div>
+
             {promptInput.trim().length >= 1 ? (
+
               <div className="group relative">
                 <span
                   onClick={() => handleSubmit(promptInput, id)}
@@ -69,6 +78,7 @@ const ChatField = ({
                 </span>
                 <p className="bottom-tooltip">Submit</p>
               </div>
+
             ) : (
               <div className="group relative">
                 <FaMicrophone className="menu-btns text-4xl text-[#595c5f] dark:text-[#868a8f]" />
@@ -78,12 +88,18 @@ const ChatField = ({
           </div>
         </div>
       ) : (
+
+
         // for new users
-        <div className={`${dark ? "prompt-shadow" : ""}  m-auto flex w-[45rem] items-center rounded-full border border-[#595c5f]/50 px-4 py-2 text-[#595c5f] dark:border-[#9a9fa5]/50 dark:text-[#868a8f]`}>
+        <div
+          className={`${dark ? "prompt-shadow" : ""} m-auto flex w-[45rem] items-center rounded-full border border-[#595c5f]/50 px-4 py-2 text-[#595c5f] dark:border-[#9a9fa5]/50 dark:text-[#868a8f]`}
+        >
+
           <div className="group relative">
             <GoPlus className="menu-btns text-4xl text-[#595c5f] dark:text-[#868a8f]" />
             <p className="bottom-tooltip">Add files</p>
           </div>
+
           <input
             placeholder="Ask Century"
             className="flex-1 border-none px-3 text-base text-[#505050] outline-none placeholder:text-[#595c5f] dark:text-white dark:placeholder:text-[#9a9fa5]"
@@ -97,6 +113,7 @@ const ChatField = ({
 
           {/* show a send icon when a prompt is added */}
           {promptInput.trim().length >= 1 ? (
+
             <div className="group relative">
               <span
                 onClick={() => handleSubmit(promptInput, id)}
@@ -106,7 +123,9 @@ const ChatField = ({
               </span>
               <p className="bottom-tooltip">Submit</p>
             </div>
+
           ) : (
+            
             <div className="group relative">
               <FaMicrophone className="menu-btns text-4xl text-[#595c5f] dark:text-[#868a8f]" />
               <p className="bottom-tooltip">Use microphone</p>
