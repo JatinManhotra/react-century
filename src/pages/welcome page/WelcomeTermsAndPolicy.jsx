@@ -4,7 +4,7 @@ const WelcomeTermsAndPolicy = ({isSignedIn}) => {
    {!isSignedIn && (
 
         // only shown in not logged in page
-        <h3 className="m-auto mt-4 w-fit text-sm text-[#595c5f] dark:text-[#9a9fa5]">
+        <h3 className="m-auto mt-2 xl:mt-4 w-fit text-center text-xs xl:text-sm text-[#595c5f] dark:text-[#9a9fa5]">
           <span className="underline">Terms</span> and the{" "}
           <span className="underline">Privacy Policy</span> apply, Century can
           make mistakes, so double-check it

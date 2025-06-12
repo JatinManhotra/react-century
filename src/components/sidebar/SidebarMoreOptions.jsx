@@ -52,49 +52,49 @@ const SidebarMoreOptions = ({
 
   return (
     <ul
-      className={`${toggleSidebarOptions ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"} ${collapsed ? "-right-40" : "right-0"} absolute -top-80 cursor-pointer rounded-lg bg-[#f0f4f9] whitespace-nowrap shadow shadow-black/50 transition-opacity duration-100 ease-in dark:bg-[#1b1c1d] dark:text-white`}
+      className={`${toggleSidebarOptions ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"} ${collapsed ? "-right-40" : "right-0"} absolute -top-75 xl:-top-80 cursor-pointer rounded-lg bg-[#f0f4f9] whitespace-nowrap shadow shadow-black/50 transition-opacity duration-100 ease-in dark:bg-[#1b1c1d] dark:text-white`}
     >
-      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]">
-        <FaHistory className="text-lg" /> Activity
+      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]">
+        <FaHistory className="text-[1rem] xl:text-lg" /> Activity
       </li>
 
-      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]">
-        <HiOutlineUserPlus className="text-xl" /> Saved info
+      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]">
+        <HiOutlineUserPlus className="text-lg xl:text-xl" /> Saved info
       </li>
 
-      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]">
-        <IoExtensionPuzzleOutline className="text-xl" /> Apps
+      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]">
+        <IoExtensionPuzzleOutline className="text-lg xl:text-xl" /> Apps
       </li>
 
-      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]">
-        <IoMdLink className="text-xl" /> Your public links
+      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]">
+        <IoMdLink className="text-lg xl:text-xl" /> Your public links
       </li>
 
       {/* dropdown to show on mobile devices */}
-      <li onClick={()=>setShowOptions({show:(!showOptions.show), title:"Theme"})} className={`relative block xl:hidden  mt-2 mb-2 px-6 py-1 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]`}>
+      <li onClick={()=>setShowOptions({show:(!showOptions.show), title:"Theme"})} className={`relative block xl:hidden  mt-2 mb-2 px-6 py-1 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]`}>
         <div className="flex items-center gap-5">
-          <TbSunMoon className="text-3xl" />{" "}
+          <TbSunMoon className="text-2xl xl:text-3xl" />{" "}
           <p className="flex w-full items-center justify-between">
             Theme <MdArrowRight className="text-lg" />
           </p>
         </div>
 
-        <div className={`${(showOptions.title === "Theme" &&  showOptions.show) ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}  absolute -top-0 -right-45  transition-opacity duration-100 ease-in `}>
-          <ul className="w-50 bg-[#f0f4f9] py-2 whitespace-nowrap shadow shadow-black/50 transition-opacity duration-100 ease-in dark:bg-[#1b1c1d] dark:text-white">
-            <li className="mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]">
+        <div className={`${(showOptions.title === "Theme" &&  showOptions.show) ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} z-[50]  absolute -top-0 -right-30 xl:-right-45  transition-opacity duration-100 ease-in `}>
+          <ul className="w-40 xl:w-50 bg-[#f0f4f9] py-2 whitespace-nowrap shadow shadow-black/50 transition-opacity duration-100 ease-in dark:bg-[#1b1c1d] dark:text-white">
+            <li className="mb-2 flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]">
               System
             </li>
 
             <li
               onClick={setLightMode}
-              className="mb-2 flex w-full items-center justify-between gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]"
+              className="mb-2 flex w-full items-center justify-between gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]"
             >
               Light {dark ? null : <LuCircleCheckBig className="text-lg" />}
             </li>
 
             <li
               onClick={setDarkMode}
-              className="flex w-full items-center justify-between gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]"
+              className="flex w-full items-center justify-between gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]"
             >
               Dark {dark ? <LuCircleCheckBig className="text-lg" /> : null}
             </li>
@@ -134,27 +134,27 @@ const SidebarMoreOptions = ({
         </div>
       </li>
 
-      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]">
-        <MdOutlineFeedback className="text-xl" /> Send feedback
+      <li className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]">
+        <MdOutlineFeedback className="text-lg xl:text-xl" /> Send feedback
       </li>
 
       {/* dropdown to show on mobile devices */}
-      <li onClick={()=>setShowOptions({show:(!showOptions.show), title:"Help"})}  className="group relative block xl:hidden mt-2 mb-2 px-6 py-1 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]">
+      <li onClick={()=>setShowOptions({show:(!showOptions.show), title:"Help"})}  className="group relative block xl:hidden mt-2 mb-2 px-6 py-1 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]">
         <div className="flex items-center gap-5">
-          <MdOutlineHelpCenter className="text-3xl" />{" "}
+          <MdOutlineHelpCenter className="text-2xl xl:text-3xl" />{" "}
           <p className="flex w-full items-center justify-between">
             Help <MdArrowRight className="text-lg" />
           </p>
         </div>
 
-        <div className={`${(showOptions.title === "Help" &&  showOptions.show) ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} absolute -top-5 -right-45  transition-opacity duration-100 ease-in `}>
-          <ul className="w-50 bg-[#f0f4f9] py-2 whitespace-nowrap shadow shadow-black/50 transition-opacity duration-100 ease-in dark:bg-[#1b1c1d] dark:text-white">
-            <li className="mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]">
-              <IoIosHelpCircleOutline className="text-xl" /> Help center
+        <div className={`${(showOptions.title === "Help" &&  showOptions.show) ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} absolute -top-5 -right-30 xl:-right-45  transition-opacity duration-100 ease-in `}>
+          <ul className="w-40 xl:w-50 bg-[#f0f4f9] py-2 whitespace-nowrap shadow shadow-black/50 transition-opacity duration-100 ease-in dark:bg-[#1b1c1d] dark:text-white">
+            <li className="mb-2 flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]">
+              <IoIosHelpCircleOutline className="text-lg xl:text-xl" /> Help center
             </li>
 
-            <li className="flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]">
-              <MdOutlinePrivacyTip className="text-xl" />
+            <li className="flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]">
+              <MdOutlinePrivacyTip className="text-lg xl:text-xl" />
               Privacy
             </li>
           </ul>

@@ -39,7 +39,7 @@ const TimestampConverter = ({ timestamp }) => {
   const formattedTime = formatTime(date);
 
   return (
-    <span className="text-sm text-gray-600 dark:text-gray-400">
+    <span className="text-xs xl:text-sm text-gray-600 dark:text-gray-400">
       {formattedDate} <br /> {formattedTime}
     </span>
   );
@@ -137,7 +137,7 @@ const SidebarRecent = ({
 
   // common classes for same component
   const chatClass = (chatId) =>
-    `group relative flex w-full cursor-pointer items-center justify-between rounded-full mb-2 px-3  pl-5 ${
+    `group relative flex w-full cursor-pointer text-sm xl:text-base items-center justify-between rounded-full mb-2 px-3  pl-5 ${
       chatId === currentChatId
         ? "bg-blue-200 text-blue-800 dark:bg-[#1f3760] dark:text-white"
         : "text-[#5a5f5f] hover:bg-[#dde3ea] dark:text-[#878e8f] dark:hover:bg-[#3d3f41]"
@@ -147,12 +147,12 @@ const SidebarRecent = ({
     <>
       {!hideSidebar && (
         <div
-          className={`${dark ? "custom-scrollbar" : "light-scrollbar"} mt-8 overflow-x-hidden overflow-y-scroll ${
+          className={`${dark ? "custom-scrollbar" : "light-scrollbar"} mt-8 -mr-2 xl:-mr-0 overflow-x-hidden overflow-y-scroll ${
             isSignedIn ? "h-[calc(100%_-_16rem)]" : "h-[calc(100%_-_13rem)]"
           }`}
         >
           <h3
-            className={`${isSignedIn ? "text-[#5a5f5f] dark:text-[#7d8283]" : "text-[#5a5f5f] dark:text-white"} ml-5`}
+            className={`${isSignedIn ? "text-[#5a5f5f] dark:text-[#7d8283]" : "text-[#5a5f5f] dark:text-white"} text-sm xl:text-base  ml-5`}
           >
             Recent
           </h3>
@@ -195,7 +195,7 @@ const SidebarRecent = ({
                       } absolute -left-30 z-10 rounded-lg bg-[#f0f4f9] whitespace-nowrap text-black shadow shadow-black/50 transition-opacity duration-150 ease-in dark:bg-[#1b1c1d] dark:text-white`}
                     >
                       {/* // creation date */}
-                      <li className="flex items-center gap-5 px-6 py-2 text-sm">
+                      <li className="flex items-center gap-5 px-6 py-2 text-xs xl:text-sm">
                         <p>
                           Created on : <br />{" "}
                           <TimestampConverter timestamp={timestamp} />
@@ -206,16 +206,16 @@ const SidebarRecent = ({
 
                       <li
                         onClick={() => handleRenameClick(item.id, item.title)}
-                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]"
+                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]"
                       >
-                        <GoPencil className="text-lg" /> Rename
+                        <GoPencil className="xl:text-lg" /> Rename
                       </li>
 
                       <li
                         onClick={() => deleteConversation(item.id)}
-                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]"
+                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]"
                       >
-                        <BsTrash className="text-lg" /> Delete
+                        <BsTrash className="xl:text-lg" /> Delete
                       </li>
                     </ul>
                   </div>
@@ -244,7 +244,7 @@ const SidebarRecent = ({
                 <button
                   onClick={() => setShowAll((prev) => !prev)}
                   aria-label="Show more"
-                  className="group relative flex w-full cursor-pointer items-center gap-2 rounded-full px-3 py-2 pl-5 text-[#444848] hover:bg-blue-200 active:bg-blue-300 dark:text-[#a3abac] dark:hover:bg-gray-700 dark:active:bg-[#484a4d]"
+                  className="group relative text-sm xl:text-base flex w-full cursor-pointer items-center gap-2 rounded-full px-3 py-2 pl-5 text-[#444848] hover:bg-blue-200 active:bg-blue-300 dark:text-[#a3abac] dark:hover:bg-gray-700 dark:active:bg-[#484a4d]"
                 >
                   <h3>{showAll ? "Show less" : "Show more"}</h3>
 
@@ -284,40 +284,44 @@ const SidebarRecent = ({
                         }}
                       />
 
-                      <ul
-                        className={`${
-                          openMenuId === item.id
-                            ? "opacity-100"
-                            : "pointer-events-none opacity-0"
-                        } absolute -left-30 z-10 rounded-lg bg-[#f0f4f9] whitespace-nowrap text-black shadow shadow-black/50 transition-opacity duration-150 ease-in dark:bg-[#1b1c1d] dark:text-white`}
+                       <ul
+                      className={`${
+                        openMenuId === item.id
+                          ? "opacity-100"
+                          : "pointer-events-none opacity-0"
+                      } absolute -left-30 z-10 rounded-lg bg-[#f0f4f9] whitespace-nowrap text-black shadow shadow-black/50 transition-opacity duration-150 ease-in dark:bg-[#1b1c1d] dark:text-white`}
+                    >
+                      {/* // creation date */}
+                      <li className="flex items-center gap-5 px-6 py-2 text-xs xl:text-sm">
+                        <p>
+                          Created on : <br />{" "}
+                          <TimestampConverter timestamp={timestamp} />
+                        </p>
+                      </li>
+
+                      <hr className="text-gray-400" />
+
+                      <li
+                        onClick={() => handleRenameClick(item.id, item.title)}
+                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]"
                       >
-                        <li className="flex items-center gap-5 px-6 py-2 text-sm">
-                          <p>
-                            Created on : <br />{" "}
-                            <TimestampConverter timestamp={timestamp} />
-                          </p>
-                        </li>
-                        <hr className="text-gray-400" />
-                        <li
-                          onClick={() => handleRenameClick(item.id, item.title)}
-                          className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]"
-                        >
-                          <GoPencil className="text-lg" /> Rename
-                        </li>
-                        <li
-                          onClick={() => deleteConversation(item.id)}
-                          className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]"
-                        >
-                          <BsTrash className="text-lg" /> Delete
-                        </li>
-                      </ul>
+                        <GoPencil className="xl:text-lg" /> Rename
+                      </li>
+
+                      <li
+                        onClick={() => deleteConversation(item.id)}
+                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]"
+                      >
+                        <BsTrash className="xl:text-lg" /> Delete
+                      </li>
+                    </ul>
                     </div>
                   </div>
                 ))}
             </div>
           ) : (
             // Not signed in message
-            <div className="mt-2 overflow-hidden rounded-lg bg-[#dde3ea] px-4 py-3 pb-6 text-sm dark:bg-[#454849] dark:text-white">
+            <div className="mt-2 overflow-hidden rounded-lg bg-[#dde3ea] px-2 xl:px-4 py-3 pb-6 text-xs xl:text-sm dark:bg-[#454849] dark:text-white">
               <p>
                 Sign in to start saving your <br /> chats <br />{" "}
                 <span className="text-gray-600 dark:text-white">
@@ -329,7 +333,7 @@ const SidebarRecent = ({
               <button
                 aria-label="Sign in"
                 onClick={() => setShowModal(true)}
-                className="mt-10 cursor-pointer text-blue-600 dark:text-blue-400"
+                className="mt-10 cursor-pointer text-sm text-blue-600 dark:text-blue-400"
               >
                 Sign in
               </button>
@@ -339,8 +343,8 @@ const SidebarRecent = ({
           {/* // after deleting message */}
           <div
             className={` ${showDelete ? "opacity-100" : "opacity-0"} ${
-              !hideSidebar ? "left-5" : "left-0"
-            } pointer-events-none absolute bottom-7 z-[105] rounded-lg bg-black px-4 py-2 text-white transition-opacity duration-300 ease-in`}
+              !hideSidebar ? "xl:left-5" : "xl:left-0"
+            } pointer-events-none absolute bottom-7 z-[105] text-sm xl:text-base rounded-lg bg-black px-4 py-2 text-white transition-opacity duration-300 ease-in`}
           >
             Deleted Successfully
           </div>

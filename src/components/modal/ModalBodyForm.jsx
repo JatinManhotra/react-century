@@ -22,12 +22,12 @@ const ModalBodyForm = ({
   validateForm,
 }) => {
   return (
-    <form onSubmit={(event) => validateForm(event)} className="px-8">
+    <form onSubmit={(event) => validateForm(event)} className="px-3 xl:px-8">
       {signUpForm && (
         <div>
           <label
             htmlFor="name"
-            className="mb-1 block text-sm font-medium text-black dark:text-white"
+            className="mb-1 block text-xs font-medium text-black xl:text-sm dark:text-white"
           >
             Name
           </label>
@@ -39,7 +39,7 @@ const ModalBodyForm = ({
             value={name}
             onChange={(e) => setName(e.target.value)}
             onKeyUp={validateName}
-            className={`w-full rounded-lg border px-4 py-2 transition-all outline-none placeholder:text-sm placeholder:text-gray-600 dark:placeholder:text-gray-400 ${
+            className={`form-input ${
               nameError.touched
                 ? nameError.error
                   ? "border-red-500"
@@ -66,7 +66,7 @@ const ModalBodyForm = ({
       <div>
         <label
           htmlFor="email"
-          className="mb-1 block text-sm font-medium text-black dark:text-white"
+          className="mb-1 block text-xs font-medium text-black xl:text-sm dark:text-white"
         >
           Email
         </label>
@@ -78,7 +78,7 @@ const ModalBodyForm = ({
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           onKeyUp={validateEmail}
-          className={`w-full rounded-lg border px-4 py-2 transition-all outline-none placeholder:text-sm placeholder:text-gray-600 dark:placeholder:text-gray-400 ${
+          className={`form-input ${
             emailError.touched
               ? emailError.error
                 ? "border-red-500"
@@ -104,7 +104,7 @@ const ModalBodyForm = ({
       <div>
         <label
           htmlFor="password"
-          className="mb-1 block text-sm font-medium text-black dark:text-white"
+          className="mb-1 block text-xs font-medium text-black xl:text-sm dark:text-white"
         >
           Password
         </label>
@@ -117,7 +117,7 @@ const ModalBodyForm = ({
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onKeyUp={signUpForm ? passwordStrength : validatePassword}
-            className={`w-full rounded-lg border px-4 py-2 transition-all outline-none placeholder:text-sm placeholder:text-gray-600 dark:placeholder:text-gray-400 ${
+            className={`form-input ${
               signUpForm
                 ? passwordStrengthMsg.touched
                   ? passwordStrengthMsg.border
@@ -179,10 +179,10 @@ const ModalBodyForm = ({
               className="rounded border-gray-500 text-indigo-600 accent-indigo-600 focus:ring-indigo-500"
             />
 
-            <span className="ml-2 text-sm dark:text-white">Remember me</span>
+            <span className="ml-2 text-xs xl:text-sm dark:text-white">Remember me</span>
           </label>
 
-          <a className="cursor-pointer text-sm text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300">
+          <a className="cursor-pointer text-xs xl:text-sm text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300">
             Forgot password?
           </a>
         </div>
@@ -191,7 +191,7 @@ const ModalBodyForm = ({
       <button
         aria-label="Submit form"
         type="submit"
-        className="mt-4 w-full cursor-pointer rounded-lg bg-indigo-600 py-2.5 font-medium text-white transition-colors hover:bg-indigo-700"
+        className="mt-4 w-full xl:text-base text-sm cursor-pointer rounded-lg bg-indigo-600 py-2.5 font-medium text-white transition-colors hover:bg-indigo-700"
       >
         {signUpForm ? "Sign Up" : "Log In"}
       </button>

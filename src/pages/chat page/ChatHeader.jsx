@@ -4,14 +4,20 @@ import { PiShootingStar } from "react-icons/pi";
 import { MdLogout } from "react-icons/md";
 import user from "../../assets/user.png";
 import { CenturyContext } from "../../context/CenturyContext";
+import { IoMenu } from "react-icons/io5";
 
 const ChatHeader = ({ isSignedIn, setIsSignedIn }) => {
-  const { handleLogout, setShowModal, username, showOptions, setShowOptions } = useContext(CenturyContext);
+  const { handleLogout, setShowModal, setHideSidebar, username, showOptions, setShowOptions } =
+    useContext(CenturyContext);
 
   return (
     <div className="flex w-full items-center justify-between px-3 py-2">
       <div className="text-[#4a4a4a] dark:text-white">
-        <h2 className="text-xl">Century</h2>
+        <IoMenu
+          onClick={() => setHideSidebar((prev) => !prev)}
+          className="menu-btns mt-2 mb-2 block text-4xl xl:hidden"
+        />
+        <h2 className="text-lg xl:text-xl">Century</h2>
 
         <h3 className="flex w-fit cursor-pointer items-center gap-2 rounded-full bg-[#f0f4f9] px-2 py-1 text-xs text-[#4a4a4a] hover:bg-[#dde3ea] active:bg-[#c0c5cb] dark:bg-[#282a2c] dark:text-[#9a9fa5] dark:hover:bg-[#383b3e] dark:active:bg-[#323537]">
           2.5 Flash <FaCaretDown />
@@ -20,7 +26,7 @@ const ChatHeader = ({ isSignedIn, setIsSignedIn }) => {
 
       {isSignedIn ? (
         // shows when user is logged in
-        <div className="mr-5 flex items-center gap-5 text-sm">
+        <div className="mr-5 self-start mt-2 xl:mt-0 flex items-center gap-5 text-xs xl:text-sm">
           <button
             aria-label="Upgrade"
             className="flex cursor-pointer items-center gap-2 rounded-sm bg-[#dde3ea] px-4 py-2 hover:bg-[#cbd0d6] active:bg-[#bec3c8] dark:bg-[#282a2c] dark:text-white dark:hover:bg-[#3d3f41] dark:active:bg-[#3a3c3e]"
@@ -45,10 +51,10 @@ const ChatHeader = ({ isSignedIn, setIsSignedIn }) => {
               />
             </button>
 
-            <ul
+           <ul
               className={`${showOptions.title === "User" && showOptions.show ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"} absolute -right-5 z-[10] w-32 cursor-pointer bg-[#f0f4f9] whitespace-nowrap text-black opacity-0 shadow shadow-black/50 transition-opacity duration-100 ease-in dark:bg-[#1b1c1d] dark:text-white`}
             >
-              <li className="mt-2 mb-2 px-6 py-2 text-center text-base text-black dark:text-white">
+              <li className="mt-2 mb-2 px-6 py-2 text-center text-sm xl:text-base text-black dark:text-white">
                 {username}
               </li>
 
@@ -56,9 +62,9 @@ const ChatHeader = ({ isSignedIn, setIsSignedIn }) => {
                 onClick={() => {
                   handleLogout(), setIsSignedIn(false);
                 }}
-                className="mt-2 mb-2 flex items-center gap-3 px-6 py-2 text-base text-red-600 hover:bg-[#dde3ea] dark:text-red-400 dark:hover:bg-[#272729]"
+                className="mt-2 mb-2 flex items-center gap-3 px-6 py-2 text-sm xl:text-base text-red-600 hover:bg-[#dde3ea] dark:text-red-400 dark:hover:bg-[#272729]"
               >
-                <MdLogout className="text-lg" /> Logout
+                <MdLogout className="xl:text-lg" /> Logout
               </li>
             </ul>
           </div>
@@ -93,7 +99,7 @@ const ChatHeader = ({ isSignedIn, setIsSignedIn }) => {
         </div>
       ) : (
         // not logged in component
-        <div className="mr-5 flex items-center gap-5 text-sm">
+        <div className="xl:mr-5 flex items-center mt-2 xl:mt-0 self-start xl:self-auto gap-5 text-xs xl:text-sm">
           <a
             target="_blank"
             href="https://github.com/JatinManhotra/react-century"
@@ -101,9 +107,10 @@ const ChatHeader = ({ isSignedIn, setIsSignedIn }) => {
           >
             About Century
           </a>
+
           <button
-            aria-label="Sign in"
             onClick={() => setShowModal(true)}
+            aria-label="Sign in"
             className="cursor-pointer rounded-sm bg-blue-600 px-4 py-1.5 text-white dark:bg-blue-300 dark:text-black"
           >
             Sign in

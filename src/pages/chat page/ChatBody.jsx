@@ -37,11 +37,11 @@ const ChatBody = ({
 
   return (
     <div
-      className={`${dark ? "custom-scrollbar" : "light-scrollbar"} w-full overflow-y-scroll ${isSignedIn ? "h-[calc(100%_-_14.5rem)]" : "h-[calc(100%_-_11.5rem)]"} `}
+      className={`${dark ? "custom-scrollbar" : "light-scrollbar"} w-full overflow-y-scroll ${isSignedIn ? "h-[calc(100%_-_16rem)] xl:h-[calc(100%_-_14.5rem)]" : "h-[calc(100%_-_15rem)] xl:h-[calc(100%_-_11.5rem)]"} `}
     >
 
       <div
-        className={`m-auto flex h-full w-full max-w-[70%] flex-col items-center`}
+        className={`m-auto flex h-full w-full  max-w-[98%] xl:max-w-[70%] flex-col items-center`}
       >
         {messages?.map((msg, index) => (
           <div
@@ -50,7 +50,7 @@ const ChatBody = ({
           >
 
             <img
-              className={`${msg.role === "ai" ? "block" : "hidden"} mr-4 h-fit w-15`}
+              className={`${msg.role === "ai" ? "block" : "hidden"} mr-2 xl:mr-4 h-fit w-12 xl:w-15`}
               src={logo}
               alt="Century logo"
             />
@@ -64,7 +64,7 @@ const ChatBody = ({
                     <textarea
                       name="update-prompt"
                       id="update-prompt"
-                      className="w-150 resize-none overflow-hidden rounded-3xl border-2 border-blue-600 bg-[#fff] p-4 text-black outline-none dark:border-blue-300 dark:bg-[#27292b] dark:text-white"
+                      className="w-75 text-sm xl:text-base xl:w-150 resize-none overflow-hidden rounded-3xl border-2 border-blue-600 bg-[#fff] p-4 text-black outline-none dark:border-blue-300 dark:bg-[#27292b] dark:text-white"
                       value={editingText}
                       onChange={handleTextChange}
                     />
@@ -74,7 +74,7 @@ const ChatBody = ({
                         aria-label="Update your prompt"
                         disabled={editingText === msg.text ? true : false}
                         onClick={() => handleSaveEdit(index, editingText, id)}
-                        className="cursor-pointer rounded-full bg-blue-600 px-5 py-2 text-white hover:bg-blue-500 disabled:cursor-default dark:bg-blue-300 dark:text-blue-800 dark:hover:bg-blue-400 dark:disabled:bg-[#27292b] dark:disabled:text-[#7e848b]"
+                        className="cursor-pointer rounded-full bg-blue-600 px-5 py-2 text-white hover:bg-blue-500 disabled:cursor-default dark:bg-blue-300 dark:text-blue-800 dark:hover:bg-blue-400 dark:disabled:bg-[#27292b] dark:disabled:text-[#7e848b] text-sm xl:text-base"
                       >
                         Update
                       </button>
@@ -82,7 +82,7 @@ const ChatBody = ({
                       <button
                         aria-label="Cancel editing"
                         onClick={handleCancelEdit}
-                        className="cursor-pointer rounded-full px-5 py-2 text-blue-600 hover:bg-[#f0f4f9] dark:text-blue-200 dark:hover:bg-gray-800"
+                        className="cursor-pointer rounded-full px-5 py-2 text-blue-600 hover:bg-[#f0f4f9] dark:text-blue-200 dark:hover:bg-gray-800 text-sm xl:text-base"
                       >
                         Cancel
                       </button>
@@ -93,15 +93,15 @@ const ChatBody = ({
 
 
                   <div className="group flex flex-row-reverse items-start gap-2">
-                    <p className="max-w-[30vw] self-center rounded-l-2xl rounded-br-2xl bg-[#f0f4f9] p-3 text-black dark:bg-[#333537] dark:text-white">
+                    <p className="max-w-[60vw] text-sm xl:text-base xl:max-w-[30vw] self-center rounded-l-2xl rounded-br-2xl bg-[#f0f4f9] p-3 text-black dark:bg-[#333537] dark:text-white">
                       {msg.text}
                     </p>
 
                     <div
                       onClick={() => handleEditText(index, msg.text)}
-                      className="relative hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full text-[#575757] group-hover:flex hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:text-[#949a9c] dark:hover:bg-[#353739] dark:active:bg-[#494c4e]"
+                      className="relative self-center flex xl:hidden xl:h-10 xl:w-10 h-8 w-8 cursor-pointer items-center justify-center rounded-full text-[#575757] xl:group-hover:flex hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:text-[#949a9c] dark:hover:bg-[#353739] dark:active:bg-[#494c4e]"
                     >
-                      <FaPencilAlt className="w-4" />
+                      <FaPencilAlt className="w-3 xl:w-4" />
                       <p className="bottom-tooltip">Edit text</p>
                     </div>
                   </div>
@@ -109,7 +109,7 @@ const ChatBody = ({
               ) : (
 
 
-                <div className="prose dark:prose-invert animate-height max-w-full self-start overflow-hidden break-words text-black dark:text-white">
+                <div className="prose dark:prose-invert text-sm xl:text-base animate-height max-w-60 xl:max-w-full self-start overflow-hidden break-words text-black dark:text-white">
                   <ReactMarkdown>{msg.text}</ReactMarkdown>
                 </div>
               )}
@@ -117,7 +117,7 @@ const ChatBody = ({
 
               {msg.role === "ai" && (
                 <div
-                  className={`animate-slow-opacity mt-2 flex w-fit cursor-pointer text-lg`}
+                  className={`animate-slow-opacity mt-2 flex w-fit cursor-pointer xl:text-lg`}
                 >
                   <div className="group menu-btns relative">
 
@@ -173,22 +173,22 @@ const ChatBody = ({
                     </div>
 
                     <ul
-                      className={`${showMoreOptions === index ? "opacity-100" : "pointer-events-none opacity-0"} absolute z-10 rounded-lg bg-[#f0f4f9] whitespace-nowrap shadow shadow-black/50 transition-opacity duration-100 ease-in dark:bg-[#1b1c1d] dark:text-white`}
+                      className={`${showMoreOptions === index ? "opacity-100" : "pointer-events-none opacity-0"} absolute -left-20 xl:-left-0 z-10 rounded-lg bg-[#f0f4f9] whitespace-nowrap shadow shadow-black/50 transition-opacity duration-100 ease-in dark:bg-[#1b1c1d] dark:text-white`}
                     >
 
                       <li
                         onClick={() => handleCopy(msg.text)}
-                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]"
+                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]"
                       >
-                        <FaRegCopy className="text-lg" /> Copy
+                        <FaRegCopy className="text-base xl:text-lg" /> Copy
                       </li>
 
-                      <li className="mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]">
-                        <FaVolumeLow className="text-lg" /> Listen
+                      <li className="mb-2 flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]">
+                        <FaVolumeLow className="text-base xl:text-lg" /> Listen
                       </li>
 
-                      <li className="mb-2 flex items-center gap-5 px-6 py-2 text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]">
-                        <LuFlag className="text-lg" /> Report legal issue
+                      <li className="mb-2 flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]">
+                        <LuFlag className="text-base xl:text-lg" /> Report legal issue
                       </li>
                       
                     </ul>
@@ -203,11 +203,11 @@ const ChatBody = ({
           <>
             <div className="flex w-full animate-pulse items-center justify-start gap-2 text-black dark:text-white">
               <img
-                className={`mr-4 h-fit w-15`}
+                className={`mr-2 xl:mr-4 h-fit w-12 xl:w-15`}
                 src={logo}
                 alt="Century logo"
               />
-              <p className="">Century is thinking...</p>
+              <p className="text-sm xl:text-base">Century is thinking...</p>
             </div>
             <div className="pb-20" ref={bottomRef} />
           </>
@@ -215,11 +215,11 @@ const ChatBody = ({
 
         {errorMsg && (
           <>
-            <div className="self-start p-3 relative group rounded-xl w-[50%] bg-transparent border border-red-500 gap-2 text-black dark:text-red-500">
+            <div className="self-start w-[80%] text-sm xl:text-base p-3 relative group rounded-xl xl:w-[50%] bg-transparent border border-red-500 gap-2 text-black dark:text-red-500">
              
               <p className="w-[95%]">An error occurred while getting a response from Century, please try again!</p>
 
-            <LiaTimesCircleSolid onClick={()=>setErrorMsg(false)} className="text-red-500 hidden group-hover:block text-2xl cursor-pointer absolute top-2 right-2" />
+            <LiaTimesCircleSolid onClick={()=>setErrorMsg(false)} className="text-red-500 xl:hidden group-hover:block text-2xl cursor-pointer absolute top-2 right-2" />
             </div>
             <div className="pb-20" ref={bottomRef} />
           </>

@@ -3,7 +3,7 @@ const ModalFooter = ({ signUpForm, setSignUpForm }) => {
     <>
       {signUpForm ? (
         // login msg in signup page
-        <div className="mt-4 px-8 pb-8 text-center text-sm dark:text-white">
+        <div className="mt-4 px-8 pb-8 text-center text-xs xl:text-sm dark:text-white">
           Already have an account?
           <a
             onClick={() => setSignUpForm(false)}
@@ -14,7 +14,7 @@ const ModalFooter = ({ signUpForm, setSignUpForm }) => {
         </div>
       ) : (
         // signup msg in login page
-        <div className="mt-6 px-8 pb-8 text-center text-sm dark:text-white">
+        <div className="mt-6 px-8 pb-8 text-center text-xs xl:text-sm dark:text-white">
           Don't have an account?
           <a
             onClick={() => setSignUpForm(true)}

@@ -26,9 +26,9 @@ const Welcome = () => {
   if (loading) {
     return (
       <div className="relative flex h-screen w-screen bg-[#fff] dark:bg-[#1b1c1d] items-center justify-center ">
-        <div className="div-spinner flex h-75 w-75 items-center justify-center rounded-full"></div>
+        <div className="div-spinner flex w-60 h-60 xl:h-75 xl:w-75 items-center justify-center rounded-full"></div>
         <img
-          className="scale-img absolute top-[50%] left-[50%] w-70 translate-x-[-50%] translate-y-[-50%] rounded-full"
+          className="scale-img absolute top-[50%] left-[50%] w-55 xl:w-70 translate-x-[-50%] translate-y-[-50%] rounded-full"
           src={logo}
           alt="Century logo"
         />

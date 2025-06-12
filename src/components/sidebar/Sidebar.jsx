@@ -31,6 +31,7 @@ const Sidebar = () => {
   function newChat() {
     setMessages([]);
     navigate("/");
+    setHideSidebar(true)
   }
 
   if (loading) {
@@ -39,11 +40,18 @@ const Sidebar = () => {
   }
 
   return (
+    <>
+ { !hideSidebar && <div
+        onClick={() => setHideSidebar(true)}
+        className="animate-opacity fixed xl:hidden block z-[94] h-screen w-screen bg-black/50"
+      ></div>}
+
     <section
-      className={`relative z-[95] h-screen w-full bg-[#f0f4f9] p-4 whitespace-nowrap transition-all duration-300 ease-in-out dark:bg-[#282a2c] ${
-        hideSidebar ? "max-w-[4rem]" : "max-w-[18rem]"
+      className={`xl:relative z-[95] h-screen w-full bg-[#f0f4f9] p-2 xl:p-4 whitespace-nowrap transition-all fixed duration-300 ease-in-out dark:bg-[#282a2c] ${
+        hideSidebar ? "-left-full xl:-left-0 max-w-[4rem]" : "-left-0 max-w-[12rem] xl:max-w-[18rem]"
       }`}
     >
+    
       {/* first two menu btns with tooltips*/}
       <SidebarHeader
         hideSidebar={hideSidebar}
@@ -76,6 +84,7 @@ const Sidebar = () => {
         collapsed={hideSidebar}
       />
     </section>
+    </>
   );
 };
 

@@ -18,6 +18,9 @@
   .side-tooltip {
     @apply absolute top-1 -right-25 rounded-lg bg-black px-2 py-1 text-sm whitespace-nowrap text-white opacity-0 transition-opacity duration-150 ease-in group-hover:opacity-100;
   }
+  .form-input{
+    @apply w-full rounded-lg border px-4 py-2 text-sm caret-black transition-all outline-none placeholder:text-sm placeholder:text-gray-600 xl:text-base dark:caret-white dark:placeholder:text-gray-400
+  }
 }
 
 /* styles to make the autofill content respective to the theme */
@@ -47,7 +50,8 @@ body {
 /* dark mode scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
   appearance: none;
-  width: 0.625rem;
+  width: .375rem;
+  height: .375rem;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
@@ -63,7 +67,8 @@ body {
 /* light mode scrollbar */
 .light-scrollbar::-webkit-scrollbar {
   appearance: none;
-  width: 0.625rem;
+  width: .375rem;
+   height: .375rem;
 }
 
 .light-scrollbar::-webkit-scrollbar-thumb {

@@ -38,6 +38,7 @@ const SidebarRenameModal = ({
         // updates the UI with new title
         updateTitleInUI(chatId, newTitle.trim());
         setShowRenameModal(false);
+        handleFeedback("Updated Successfully", false);
       } else {
         handleFeedback("User doc doesn't exist", true);
       }
@@ -61,8 +62,8 @@ const SidebarRenameModal = ({
         className="animate-opacity fixed z-[98] h-screen w-screen bg-black/50"
       ></div>
 
-      <div className="z-[100] flex h-[15rem] w-[30rem] flex-col items-end gap-2 rounded-2xl bg-[#f0f4f9] px-6 py-6 dark:bg-[#1f1f1f]">
-        <h1 className="mb-5 self-start text-2xl text-black dark:text-white">
+      <div className="z-[100] flex h-[15rem] w-[90%] xl:w-[30rem] flex-col items-end gap-2 rounded-2xl bg-[#f0f4f9] px-6 py-6 dark:bg-[#1f1f1f]">
+        <h1 className="mb-5 self-start text-lg xl:text-2xl text-black dark:text-white">
           Rename this chat
         </h1>
 
@@ -70,7 +71,7 @@ const SidebarRenameModal = ({
           rows={1}
           name="rename-field"
           id="rename-field"
-          className="w-full resize-none overflow-hidden rounded-lg border-2 border-blue-600 p-4 text-lg text-black outline-none dark:border-blue-300 dark:bg-[#1f1f1f] dark:text-white"
+          className="w-full resize-none overflow-hidden rounded-lg border-2 border-blue-600 p-4 xl:text-lg text-black outline-none dark:border-blue-300 dark:bg-[#1f1f1f] dark:text-white"
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
         />
@@ -80,7 +81,7 @@ const SidebarRenameModal = ({
             aria-label="Update title"
             disabled={newTitle.trim() === currentTitle.trim()}
             onClick={handleUpdate}
-            className="cursor-pointer rounded-full bg-blue-600 px-5 py-2 text-white hover:bg-blue-500 disabled:cursor-default dark:bg-blue-300 dark:text-blue-800 dark:hover:bg-blue-400 dark:disabled:bg-[#27292b] dark:disabled:text-[#7e848b]"
+            className="cursor-pointer rounded-full bg-blue-600 px-5 py-2 text-white hover:bg-blue-500 disabled:cursor-default dark:bg-blue-300 dark:text-blue-800 dark:hover:bg-blue-400 dark:disabled:bg-[#27292b] text-sm xl:text-base dark:disabled:text-[#7e848b]"
           >
             Update
           </button>
@@ -88,7 +89,7 @@ const SidebarRenameModal = ({
           <button
             aria-label="Cancel editing"
             onClick={() => setShowRenameModal(false)}
-            className="cursor-pointer rounded-full px-5 py-2 text-blue-600 hover:bg-blue-100 dark:text-blue-200 dark:hover:bg-gray-800"
+            className="cursor-pointer rounded-full px-5 py-2 text-sm xl:text-base text-blue-600 hover:bg-blue-100 dark:text-blue-200 dark:hover:bg-gray-800"
           >
             Cancel
           </button>

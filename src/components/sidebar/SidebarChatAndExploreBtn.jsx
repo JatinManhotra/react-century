@@ -17,8 +17,8 @@ const SidebarChatAndExploreBtn = ({
           onClick={newChat}
           className="group relative flex w-full cursor-pointer items-center gap-4 rounded-full px-3 py-2 pl-5 disabled:cursor-default disabled:text-[#757a7c] dark:text-white dark:hover:bg-[#3d3f41] dark:active:bg-[#484a4d] dark:disabled:hover:bg-[#282a2c] dark:disabled:active:bg-[#282a2c]"
         >
-          <HiOutlinePencilSquare className="text-xl" />
-          <h3 className="overflow-hidden">New Chat</h3>
+          <HiOutlinePencilSquare className="text-lg xl:text-xl" />
+          <h3 className="xl:text-base text-sm overflow-hidden">New Chat</h3>
           <p className="side-tooltip">New Chat</p>
         </button>
       ) : (
@@ -40,8 +40,8 @@ const SidebarChatAndExploreBtn = ({
           aria-label="Explore Gems"
           className="group relative flex w-full cursor-pointer items-center gap-3 rounded-full px-3 py-2 pl-5 text-[#5a5f5f] hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:text-[#878e8f] dark:hover:bg-[#3d3f41] dark:active:bg-[#484a4d]"
         >
-          <FaRegGem className="text-lg" />
-          <h3 className="overflow-hidden">Explore Gems</h3>
+          <FaRegGem className="xl:text-lg" />
+          <h3 className="overflow-hidden text-sm xl:text-base">Explore Gems</h3>
           <p className="side-tooltip -right-32">Explore Gems</p>
         </button>
       )}
