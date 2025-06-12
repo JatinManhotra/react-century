@@ -62,7 +62,7 @@ const SidebarRenameModal = ({
         className="animate-opacity fixed z-[98] h-screen w-screen bg-black/50"
       ></div>
 
-      <div className="z-[100] flex h-[15rem] w-[90%] xl:w-[30rem] flex-col items-end gap-2 rounded-2xl bg-[#f0f4f9] px-6 py-6 dark:bg-[#1f1f1f]">
+      <div className="z-[100] flex h-[15rem] w-[90%] sm:w-[70%] xl:w-[30rem] flex-col items-end gap-2 rounded-2xl bg-[#f0f4f9] px-6 py-6 dark:bg-[#1f1f1f]">
         <h1 className="mb-5 self-start text-lg xl:text-2xl text-black dark:text-white">
           Rename this chat
         </h1>

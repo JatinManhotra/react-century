@@ -26,12 +26,12 @@ const App = () => {
             <Route path="/chat/:id" element={<ChatPage />} />
           </Routes>
           <div
-            className={`${globalFeedback.visible ? "opacity-100" : "opacity-0"} pointer-events-none absolute top-5 left-[50%] z-[101] flex translate-x-[-50%] items-center gap-4 text-sm xl:text-base rounded-lg  bg-black px-4 py-2 text-white transition-opacity duration-300 ease-in`}
+            className={`${globalFeedback.visible ? "opacity-100" : "opacity-0"} pointer-events-none absolute top-5 left-[50%] z-[101] flex translate-x-[-50%] items-center gap-4 text-sm md:text-base rounded-lg  bg-black px-4 py-2 text-white transition-opacity duration-300 ease-in`}
           >
             {globalFeedback.errorIcon ? (
-              <MdError className=" xl:text-lg text-red-500" />
+              <MdError className=" md:text-lg text-red-500" />
             ) : (
-              <FaCircleCheck className=" xl:text-lg text-green-500" />
+              <FaCircleCheck className=" md:text-lg text-green-500" />
             )}
             <p> {globalFeedback.msg}</p>
           </div>

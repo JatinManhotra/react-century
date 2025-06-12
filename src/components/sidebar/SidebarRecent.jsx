@@ -137,7 +137,7 @@ const SidebarRecent = ({
 
   // common classes for same component
   const chatClass = (chatId) =>
-    `group relative flex w-full cursor-pointer text-sm xl:text-base items-center justify-between rounded-full mb-2 px-3  pl-5 ${
+    `group relative flex w-full cursor-pointer text-sm md:text-base items-center justify-between rounded-full mb-2 px-3  pl-5 ${
       chatId === currentChatId
         ? "bg-blue-200 text-blue-800 dark:bg-[#1f3760] dark:text-white"
         : "text-[#5a5f5f] hover:bg-[#dde3ea] dark:text-[#878e8f] dark:hover:bg-[#3d3f41]"
@@ -152,7 +152,7 @@ const SidebarRecent = ({
           }`}
         >
           <h3
-            className={`${isSignedIn ? "text-[#5a5f5f] dark:text-[#7d8283]" : "text-[#5a5f5f] dark:text-white"} text-sm xl:text-base  ml-5`}
+            className={`${isSignedIn ? "text-[#5a5f5f] dark:text-[#7d8283]" : "text-[#5a5f5f] dark:text-white"} text-sm sm:text-base  ml-5`}
           >
             Recent
           </h3>
@@ -195,7 +195,7 @@ const SidebarRecent = ({
                       } absolute -left-30 z-10 rounded-lg bg-[#f0f4f9] whitespace-nowrap text-black shadow shadow-black/50 transition-opacity duration-150 ease-in dark:bg-[#1b1c1d] dark:text-white`}
                     >
                       {/* // creation date */}
-                      <li className="flex items-center gap-5 px-6 py-2 text-xs xl:text-sm">
+                      <li className="flex items-center gap-5 px-6 py-2 text-xs sm:text-sm">
                         <p>
                           Created on : <br />{" "}
                           <TimestampConverter timestamp={timestamp} />
@@ -206,14 +206,14 @@ const SidebarRecent = ({
 
                       <li
                         onClick={() => handleRenameClick(item.id, item.title)}
-                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]"
+                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-xs sm:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]"
                       >
                         <GoPencil className="xl:text-lg" /> Rename
                       </li>
 
                       <li
                         onClick={() => deleteConversation(item.id)}
-                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]"
+                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-xs sm:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234] dark:active:bg-[#313234]"
                       >
                         <BsTrash className="xl:text-lg" /> Delete
                       </li>
@@ -321,7 +321,7 @@ const SidebarRecent = ({
             </div>
           ) : (
             // Not signed in message
-            <div className="mt-2 overflow-hidden rounded-lg bg-[#dde3ea] px-2 xl:px-4 py-3 pb-6 text-xs xl:text-sm dark:bg-[#454849] dark:text-white">
+            <div className="mt-2 overflow-hidden rounded-lg bg-[#dde3ea] px-2 sm:px-4 py-3 pb-6 text-xs sm:text-sm dark:bg-[#454849] dark:text-white">
               <p>
                 Sign in to start saving your <br /> chats <br />{" "}
                 <span className="text-gray-600 dark:text-white">
@@ -344,7 +344,7 @@ const SidebarRecent = ({
           <div
             className={` ${showDelete ? "opacity-100" : "opacity-0"} ${
               !hideSidebar ? "xl:left-5" : "xl:left-0"
-            } pointer-events-none absolute bottom-7 z-[105] text-sm xl:text-base rounded-lg bg-black px-4 py-2 text-white transition-opacity duration-300 ease-in`}
+            } pointer-events-none absolute bottom-7 z-[105] text-sm md:text-base rounded-lg bg-black px-4 py-2 text-white transition-opacity duration-300 ease-in`}
           >
             Deleted Successfully
           </div>

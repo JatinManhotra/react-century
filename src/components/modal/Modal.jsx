@@ -334,7 +334,7 @@ const Modal = () => {
       ></div>
 
       {/* modal component */}
-      <div className="pop-down z-[100] w-full max-w-[80%] xl:max-w-md rounded-xl bg-[#f0f4f9] text-black shadow-lg dark:bg-[#282a2c] dark:text-white">
+      <div className="pop-down z-[100] w-full max-w-[80%] sm:max-w-md rounded-xl bg-[#f0f4f9] text-black shadow-lg dark:bg-[#282a2c] dark:text-white">
         {/* logo and text with close icon */}
         <ModalHeader signUpForm={signUpForm} />
 

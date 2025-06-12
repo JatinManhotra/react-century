@@ -179,10 +179,10 @@ const ModalBodyForm = ({
               className="rounded border-gray-500 text-indigo-600 accent-indigo-600 focus:ring-indigo-500"
             />
 
-            <span className="ml-2 text-xs xl:text-sm dark:text-white">Remember me</span>
+            <span className="ml-2 text-xs sm:text-sm dark:text-white">Remember me</span>
           </label>
 
-          <a className="cursor-pointer text-xs xl:text-sm text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300">
+          <a className="cursor-pointer text-xs sm:text-sm text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300">
             Forgot password?
           </a>
         </div>
@@ -191,7 +191,7 @@ const ModalBodyForm = ({
       <button
         aria-label="Submit form"
         type="submit"
-        className="mt-4 w-full xl:text-base text-sm cursor-pointer rounded-lg bg-indigo-600 py-2.5 font-medium text-white transition-colors hover:bg-indigo-700"
+        className="mt-4 w-full sm:text-base text-sm cursor-pointer rounded-lg bg-indigo-600 py-2.5 font-medium text-white transition-colors hover:bg-indigo-700"
       >
         {signUpForm ? "Sign Up" : "Log In"}
       </button>

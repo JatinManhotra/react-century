@@ -47,8 +47,8 @@ const Sidebar = () => {
       ></div>}
 
     <section
-      className={`xl:relative z-[95] h-screen w-full bg-[#f0f4f9] p-2 xl:p-4 whitespace-nowrap transition-all fixed duration-300 ease-in-out dark:bg-[#282a2c] ${
-        hideSidebar ? "-left-full xl:-left-0 max-w-[4rem]" : "-left-0 max-w-[12rem] xl:max-w-[18rem]"
+      className={`xl:relative z-[95] h-screen w-full bg-[#f0f4f9] p-2 sm:p-4 whitespace-nowrap transition-all fixed duration-300 ease-in-out dark:bg-[#282a2c] ${
+        hideSidebar ? "-left-full xl:-left-0 max-w-[4rem]" : "-left-0 max-w-[12rem] sm:max-w-[18rem]"
       }`}
     >
     

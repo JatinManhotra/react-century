@@ -7,8 +7,8 @@ const ModalHeader = ({ signUpForm }) => {
   const { setShowModal } = useContext(CenturyContext);
 
   return (
-    <div className="relative mb-6 flex items-center justify-start xl:justify-center gap-2 xl:gap-5 rounded-t-xl bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 px-2 py-3 text-lg xl:text-2xl font-bold text-white">
-      <img src={logo} alt="Century logo" className="w-15 xl:w-25" />
+    <div className="relative mb-6 flex items-center justify-start sm:justify-center gap-2 sm:gap-5 rounded-t-xl bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 px-2 py-3 text-lg sm:text-xl xl:text-2xl font-bold text-white">
+      <img src={logo} alt="Century logo" className="w-15 sm:w-20" />
       <h2>{signUpForm ? "Sign Up" : "Log In"} To Century</h2>
       <BiSolidXCircle
         onClick={() => setShowModal(false)}

@@ -37,7 +37,7 @@ const ChatBody = ({
 
   return (
     <div
-      className={`${dark ? "custom-scrollbar" : "light-scrollbar"} w-full overflow-y-scroll ${isSignedIn ? "h-[calc(100%_-_16rem)] xl:h-[calc(100%_-_14.5rem)]" : "h-[calc(100%_-_15rem)] xl:h-[calc(100%_-_11.5rem)]"} `}
+      className={`${dark ? "custom-scrollbar" : "light-scrollbar"} w-full overflow-y-scroll ${isSignedIn ? "h-[calc(100%_-_16rem)] sm:h-[calc(100%_-_17rem)] xl:h-[calc(100%_-_15.5rem)]" : "h-[calc(100%_-_15rem)] xl:h-[calc(100%_-_13rem)]"} `}
     >
 
       <div
@@ -64,7 +64,7 @@ const ChatBody = ({
                     <textarea
                       name="update-prompt"
                       id="update-prompt"
-                      className="w-75 text-sm xl:text-base xl:w-150 resize-none overflow-hidden rounded-3xl border-2 border-blue-600 bg-[#fff] p-4 text-black outline-none dark:border-blue-300 dark:bg-[#27292b] dark:text-white"
+                      className="w-75 sm:w-120 text-sm sm:text-base xl:w-150 resize-none overflow-hidden rounded-3xl border-2 border-blue-600 bg-[#fff] p-4 text-black outline-none dark:border-blue-300 dark:bg-[#27292b] dark:text-white"
                       value={editingText}
                       onChange={handleTextChange}
                     />
@@ -93,15 +93,15 @@ const ChatBody = ({
 
 
                   <div className="group flex flex-row-reverse items-start gap-2">
-                    <p className="max-w-[60vw] text-sm xl:text-base xl:max-w-[30vw] self-center rounded-l-2xl rounded-br-2xl bg-[#f0f4f9] p-3 text-black dark:bg-[#333537] dark:text-white">
+                    <p className="max-w-[60vw] text-sm md:text-base xl:max-w-[30vw] self-center rounded-l-2xl rounded-br-2xl bg-[#f0f4f9] p-3 text-black dark:bg-[#333537] dark:text-white">
                       {msg.text}
                     </p>
 
                     <div
                       onClick={() => handleEditText(index, msg.text)}
-                      className="relative self-center flex xl:hidden xl:h-10 xl:w-10 h-8 w-8 cursor-pointer items-center justify-center rounded-full text-[#575757] xl:group-hover:flex hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:text-[#949a9c] dark:hover:bg-[#353739] dark:active:bg-[#494c4e]"
+                      className="relative self-center flex xl:hidden sm:h-10 sm:w-10 h-8 w-8 cursor-pointer items-center justify-center rounded-full text-[#575757] xl:group-hover:flex hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:text-[#949a9c] dark:hover:bg-[#353739] dark:active:bg-[#494c4e]"
                     >
-                      <FaPencilAlt className="w-3 xl:w-4" />
+                      <FaPencilAlt className="w-3 sm:w-4" />
                       <p className="bottom-tooltip">Edit text</p>
                     </div>
                   </div>
@@ -109,7 +109,7 @@ const ChatBody = ({
               ) : (
 
 
-                <div className="prose dark:prose-invert text-sm xl:text-base animate-height max-w-60 xl:max-w-full self-start overflow-hidden break-words text-black dark:text-white">
+                <div className="prose dark:prose-invert text-sm md:text-base animate-height max-w-60 sm:max-w-140 md:max-w-[90vw] xl:max-w-[60vw] self-start overflow-hidden break-words text-black dark:text-white">
                   <ReactMarkdown>{msg.text}</ReactMarkdown>
                 </div>
               )}
@@ -117,7 +117,7 @@ const ChatBody = ({
 
               {msg.role === "ai" && (
                 <div
-                  className={`animate-slow-opacity mt-2 flex w-fit cursor-pointer xl:text-lg`}
+                  className={`animate-slow-opacity mt-2 flex w-fit cursor-pointer md:text-lg`}
                 >
                   <div className="group menu-btns relative">
 
@@ -178,16 +178,16 @@ const ChatBody = ({
 
                       <li
                         onClick={() => handleCopy(msg.text)}
-                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]"
+                        className="mt-2 mb-2 flex items-center gap-5 px-6 py-2 text-xs sm:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]"
                       >
                         <FaRegCopy className="text-base xl:text-lg" /> Copy
                       </li>
 
-                      <li className="mb-2 flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]">
+                      <li className="mb-2 flex items-center gap-5 px-6 py-2 text-xs sm:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]">
                         <FaVolumeLow className="text-base xl:text-lg" /> Listen
                       </li>
 
-                      <li className="mb-2 flex items-center gap-5 px-6 py-2 text-xs xl:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]">
+                      <li className="mb-2 flex items-center gap-5 px-6 py-2 text-xs sm:text-sm hover:bg-[#dde3ea] active:bg-[#b5bac0] dark:hover:bg-[#313234]">
                         <LuFlag className="text-base xl:text-lg" /> Report legal issue
                       </li>
                       
@@ -207,7 +207,7 @@ const ChatBody = ({
                 src={logo}
                 alt="Century logo"
               />
-              <p className="text-sm xl:text-base">Century is thinking...</p>
+              <p className="text-sm md:text-base">Century is thinking...</p>
             </div>
             <div className="pb-20" ref={bottomRef} />
           </>
@@ -215,7 +215,7 @@ const ChatBody = ({
 
         {errorMsg && (
           <>
-            <div className="self-start w-[80%] text-sm xl:text-base p-3 relative group rounded-xl xl:w-[50%] bg-transparent border border-red-500 gap-2 text-black dark:text-red-500">
+            <div className="self-start w-[80%] sm:w-[70%] text-sm xl:text-base p-3 relative group rounded-xl xl:w-[50%] bg-transparent border border-red-500 gap-2 text-black dark:text-red-500">
              
               <p className="w-[95%]">An error occurred while getting a response from Century, please try again!</p>
 
