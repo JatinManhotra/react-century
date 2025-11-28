@@ -26,7 +26,7 @@ const App = () => {
             <Route path="/chat/:id" element={<ChatPage />} />
           </Routes>
           <div
-            className={`${globalFeedback.visible ? "opacity-100" : "opacity-0"} pointer-events-none absolute top-5 left-[50%] z-[101] flex translate-x-[-50%] items-center gap-4 text-sm md:text-base rounded-lg  bg-black px-4 py-2 text-white transition-opacity duration-300 ease-in`}
+            className={`${globalFeedback.visible ? "opacity-100" : "opacity-0"} pointer-events-none absolute top-5 left-[50%] z-101 flex translate-x-[-50%] items-center gap-4 text-sm md:text-base rounded-lg  bg-black px-4 py-2 text-white transition-opacity duration-300 ease-in`}
           >
             {globalFeedback.errorIcon ? (
               <MdError className=" md:text-lg text-red-500" />
@@ -38,7 +38,7 @@ const App = () => {
         </main>
 
         <footer>
-          <section className="fixed right-0 bottom-0 left-0 z-[200] bg-blue-500 dark:bg-cyan-500">
+          <section className="fixed right-0 bottom-0 left-0 z-200 bg-blue-500 dark:bg-cyan-500">
             <p className="flex text-sm xl:text-base items-center justify-center gap-2">
               Made with <FaHeart className="text-rose-500" /> by{" "}
               <a

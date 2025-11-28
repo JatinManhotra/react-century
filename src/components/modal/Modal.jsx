@@ -326,15 +326,15 @@ const Modal = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 z-[99] flex h-screen w-screen items-center justify-center">
+    <div className="fixed top-0 left-0 z-99 flex h-screen w-screen items-center justify-center">
       {/* faint black background for modal */}
       <div
         onClick={() => setShowModal(false)}
-        className="animate-opacity fixed z-[98] h-screen w-screen bg-black/50"
+        className="animate-opacity fixed z-98 h-screen w-screen bg-black/50"
       ></div>
 
       {/* modal component */}
-      <div className="pop-down z-[100] w-full max-w-[80%] sm:max-w-md rounded-xl bg-[#f0f4f9] text-black shadow-lg dark:bg-[#282a2c] dark:text-white">
+      <div className="pop-down z-100 w-full max-w-[80%] sm:max-w-md rounded-xl bg-[#f0f4f9] text-black shadow-lg dark:bg-[#282a2c] dark:text-white">
         {/* logo and text with close icon */}
         <ModalHeader signUpForm={signUpForm} />
 
