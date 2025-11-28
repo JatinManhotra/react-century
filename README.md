@@ -74,11 +74,11 @@ A responsive AI chat app built with **React**, **Firebase**, and the **Gemini AP
       {
         "id": "uuid-123",
         "title": "first few words of prompt",
-        "createdAt": Timestamp,
+        "createdAt": "Timestamp",
         "messages": [
           { "role": "user", "text": "Hello" },
           { "role": "ai", "text": "Hi there!" },
-          ...
+          "..."
         ]
       }
     ]
