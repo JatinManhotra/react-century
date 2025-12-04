@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { CenturyContext } from "../../context/CenturyContext";
-import Modal from "../../components/modal/modal.jsx";
+import Modal from "../../components/modal/Modal.jsx";
 import WelcomeHeader from "./WelcomeHeader.jsx";
 import WelcomeGreeting from "./WelcomeGreeting.jsx";
 import WelcomeChat from "./WelcomeChat.jsx";
