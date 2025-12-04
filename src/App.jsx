@@ -2,7 +2,7 @@ import { useContext } from "react";
 import Sidebar from "./components/sidebar/Sidebar";
 import WelcomePage from "./pages/welcome-page/WelcomePage";
 import { Route, Routes } from "react-router-dom";
-import ChatPage from "./pages/chat page/ChatPage";
+import ChatPage from "./pages/chat-page/ChatPage";
 import { CenturyContext } from "./context/CenturyContext";
 import { AuthProvider } from "./context/AuthContext";
 import { FaHeart } from "react-icons/fa";
